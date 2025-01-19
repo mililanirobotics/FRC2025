@@ -11,18 +11,16 @@ public class IntakeSubsystem extends SubsystemBase {
     private SparkMax roller1;
     private SparkMax roller2;
     private DigitalInput rollerSensor;
-    private DigitalInput leftPathSensor;
     private DigitalInput rightPathSensor;
-    
+    private DigitalInput leftPathSensor;
 
     public IntakeSubsystem () {
         roller1 = new SparkMax(PortConstants.kRoller1Port, MotorType.kBrushless);
         roller2 = new SparkMax(PortConstants.kRoller2Port, MotorType.kBrushless);
         rollerSensor = new DigitalInput(PortConstants.kRollerSensorPort);
-        leftPathSensor = new DigitalInput(PortConstants.kLeftPathSensorPort);
-        rightPathSensor = new DigitalInput(PortConstants.kRightPathSensorPort);
+        rightPathSensor = new DigitalInput(PortConstants.kRightPathSensor);
+        leftPathSensor = new DigitalInput(PortConstants.kLeftPathSensor);
     }
-    
     public void setRollerPower (double power) {
         roller1.set(power);
         roller2.set(power);
@@ -33,17 +31,17 @@ public class IntakeSubsystem extends SubsystemBase {
     public void setRoller2Power (double power) {
         roller2.set(power);
     }
+    public boolean getRollerSensor(){
+        return rollerSensor.get();
+    }
+    public boolean getLeftPathSensor(){
+        return leftPathSensor.get();
+    }
+    public boolean getRightPathSensor(){
+        return rightPathSensor.get();
+    }
     public void shutdown() {
         roller1.set(0);
         roller2.set(0);
-    }
-    public boolean getRollerSensor () {
-        return rollerSensor.get();
-    }
-    public boolean getLeftPathSensor () {
-        return leftPathSensor.get();
-    }
-    public boolean getRightPathSensor () {
-        return rightPathSensor.get();
     }
 }

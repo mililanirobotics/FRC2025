@@ -50,7 +50,6 @@ public final class Constants {
 
   //Deadzone value
   }
-
   public static class PortConstants {
     public final static int kRoller1Port = 0;
     public final static int kRoller2Port = 0;
@@ -65,5 +64,10 @@ public final class Constants {
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
+  }
+  public static class pivotConstant {
+    public static final double kPivotDownCounts = 102849; // Placeholder value, needs to be tested
+    public static final double kPivotUpCounts = 102849; // Placeholder value, needs to be tested
+    public static final double kPivotMiddleCounts = 102849; // Placeholder value, needs to be tested
   }
 }
