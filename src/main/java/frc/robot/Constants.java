@@ -2,6 +2,7 @@ package frc.robot;
 
 import java.util.List;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.pathplanner.lib.config.ModuleConfig;
 
 //path planner
@@ -14,6 +15,7 @@ import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.path.PathConstraints;
+import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -327,6 +329,12 @@ public class Constants {
     public static final List<Translation2d> testPath = List.of(
       new Translation2d(1, 0)
     );
+  }
+
+  public static class ElevatorConstants {
+    public static final int leftLiftID = 1;
+    public static final int rightLiftID = 2;
+
   }
 }
  
