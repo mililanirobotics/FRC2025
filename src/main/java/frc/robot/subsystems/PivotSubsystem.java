@@ -7,8 +7,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.PortConstants;
+import frc.robot.Constants.pivotConstant;
 
 public class PivotSubsystem extends SubsystemBase {
     private SparkFlex pivotMotor;
@@ -17,7 +17,8 @@ public class PivotSubsystem extends SubsystemBase {
 
     public PivotSubsystem () {
         pivotMotor = new SparkFlex(PortConstants.kPivotPort, MotorType.kBrushless);
-        pidController = new PIDController(PIDConstants.kP, PIDConstants.kI, PIDConstants.kD);
+        
+        pidController = new PIDController(pivotConstant.kP, pivotConstant.kI, pivotConstant.kD);
         encoder = new Encoder(7, 8); //temp holder numbers
     }
     public void setPivotPower (double power) {

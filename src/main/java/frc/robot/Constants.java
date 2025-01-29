@@ -93,6 +93,10 @@ public final class Constants {
     public static final double kPivotDownCounts = 102849; // Placeholder value, needs to be tested
     public static final double kPivotUpCounts = 102849; // Placeholder value, needs to be tested
     public static final double kPivotMiddleCounts = 102849; // Placeholder value, needs to be tested
+
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
   }
 
   public static class SwerveModuleConstants {

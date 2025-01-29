@@ -16,6 +16,7 @@ import frc.robot.commands.ManualCommands.ElevatorUpCommand;
 import frc.robot.commands.ManualCommands.IntakeShutdownCommand;
 import frc.robot.commands.ManualCommands.PivotBackwardCommand;
 import frc.robot.commands.ManualCommands.PivotForwardCommand;
+import frc.robot.commands.ManualCommands.SwerveControlCommand;
 import frc.robot.commands.TestCommands.BottomRollerDownSpeedCommand;
 import frc.robot.commands.TestCommands.BottomRollerShutdownCommand;
 import frc.robot.commands.TestCommands.BottomRollerUpSpeedCommand;
@@ -81,7 +82,7 @@ public class RobotContainer {
 
     swerveDriveSubsystem.setDefaultCommand(new SwerveControlCommand(
       swerveDriveSubsystem, 
-      controller
+      controller1
       )
     );
   }
