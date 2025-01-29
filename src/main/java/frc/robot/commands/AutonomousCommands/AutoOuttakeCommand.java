@@ -13,11 +13,11 @@ public class AutoOuttakeCommand extends Command {
     }
     @Override
     public void initialize(){
-
+        m_intakeSubsystem.setRollerPower(0.6);
     }
     @Override
     public void execute(){
-    m_intakeSubsystem.setRollerPower(0.6);
+        
     }
     @Override
     public void end(boolean interupted){

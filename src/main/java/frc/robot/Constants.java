@@ -46,19 +46,24 @@ public final class Constants {
 
   //Dpad values
     public final static int kDpadUp = 0;
+    public final static int kDpadLeft = 270;
+    public final static int kDpadRight = 90;
     public final static int kDpadDown = 180;
 
   //Deadzone value
   }
   public static class PortConstants {
-    public final static int kRoller1Port = 0;
-    public final static int kRoller2Port = 0;
-    
-    public final static int kLeftPivotPort = 0;
-    public final static int kRightPivotPort = 0;
-    public final static int kRollerSensorPort = 0;
-    public final static int kLeftPathSensor = 0;
-    public final static int kRightPathSensor = 0;
+    public final static int kRightElevatorPort = 15;
+    public final static int kLeftElevatorPort = 14;
+
+    public final static int kRollerSensorPort = 13;
+    public final static int kLeftPathSensor = 12;
+    public final static int kRightPathSensor = 11;
+
+    public final static int kRollerTopPort = 16;
+    public final static int kRollerBottomPort = 17;
+
+    public final static int kPivotPort = 18;
   }
   public static class PIDConstants {
     public static final double kP = 0;

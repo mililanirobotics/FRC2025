@@ -1,18 +1,20 @@
 package frc.robot.commands.AutonomousCommands;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.GamepadConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class AutoIntakeCommand extends Command{
     private IntakeSubsystem m_intakeSubsystem;
-    public AutoIntakeCommand(IntakeSubsystem intakeSubsystem){
+    private GenericHID m_controller;
+    public AutoIntakeCommand(IntakeSubsystem intakeSubsystem, GenericHID controller){
         m_intakeSubsystem = intakeSubsystem;
-
+        m_controller = controller;
         addRequirements(m_intakeSubsystem);
     }
     @Override
     public void initialize(){
-
     }
     @Override
     public void execute(){
@@ -24,6 +26,6 @@ public class AutoIntakeCommand extends Command{
     }
     @Override
     public boolean isFinished(){
-    return !m_intakeSubsystem.getLeftPathSensor() || !m_intakeSubsystem.getRightPathSensor();
+    return !m_intakeSubsystem.getLeftPathSensor() || !m_intakeSubsystem.getRightPathSensor() || m_controller.getRawButton(GamepadConstants.kBButtonPort);
     }
 }

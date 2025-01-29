@@ -30,6 +30,6 @@ public class PivotForwardCommand extends Command{
     }
     @Override
     public boolean isFinished(){
-        return m_controller.getRawButton(GamepadConstants.kDpadUp);
+        return !m_controller.getRawButton(GamepadConstants.kDpadUp);
     }
 }
