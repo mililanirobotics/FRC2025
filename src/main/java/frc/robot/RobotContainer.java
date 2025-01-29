@@ -16,30 +16,61 @@ import frc.robot.commands.ManualCommands.ElevatorUpCommand;
 import frc.robot.commands.ManualCommands.IntakeShutdownCommand;
 import frc.robot.commands.ManualCommands.PivotBackwardCommand;
 import frc.robot.commands.ManualCommands.PivotForwardCommand;
+import frc.robot.commands.ManualCommands.SwerveControlCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
+
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
+  //shuffleboard tabs
+  private final ShuffleboardTab teleopTab = Shuffleboard.getTab("Teleop");
+  private final ShuffleboardTab testTranPos = Shuffleboard.getTab("Test_Tran_Pos");
+  private final ShuffleboardTab testTranVel = Shuffleboard.getTab("Test_Tran_Vel");
+  private final ShuffleboardTab testRotPos = Shuffleboard.getTab("Test_Rot_Pos");
+  private final ShuffleboardTab testRotVel = Shuffleboard.getTab("Test_Rot_Vel");
+  private final ShuffleboardTab testPos = Shuffleboard.getTab("Test_Pos");
+  private final ShuffleboardTab testGyroData = Shuffleboard.getTab("Test_Gyro_Data");
+
+  //Subsystem intinitialized
+  private final SwerveDriveSubsystem swerveDriveSubsystem = new SwerveDriveSubsystem(
+    testTranPos,
+    testTranVel,
+    testRotPos,
+    testRotVel, 
+    testPos,
+    testGyroData
+  );
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
   private final GenericHID controller = new GenericHID(0);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final Field2d field = new Field2d();
+  private final PathPlannerAuto auto = new PathPlannerAuto("TEST1");
 
   public RobotContainer() {
     configureBindings();
 
+    swerveDriveSubsystem.setDefaultCommand(new SwerveControlCommand(
+      swerveDriveSubsystem, 
+      controller
+      )
+    );
   }
 
   
