@@ -3,7 +3,7 @@ package frc.robot.commands.ManualCommands;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GamepadConstants;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.Subsystems.IntakeSubsystem;
 
 public class IntakeShutdownCommand extends Command{
     private IntakeSubsystem m_intakeSubsystem;

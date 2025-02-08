@@ -24,6 +24,9 @@ public class IntakeSubsystem extends SubsystemBase {
     private DigitalInput leftPathSensor;
     private SparkMaxConfig reverse;
 
+    private boolean coralInLeft;
+    private boolean coralInRight;
+
     public IntakeSubsystem () {
         rollerTop = new SparkMax(PortConstants.kRollerTopPort, MotorType.kBrushless);
         rollerBottom = new SparkMax(PortConstants.kRollerBottomPort, MotorType.kBrushless);
@@ -33,6 +36,7 @@ public class IntakeSubsystem extends SubsystemBase {
         leftPathSensor = new DigitalInput(PortConstants.kLeftPathSensor);
         
     }
+
     public void setRollerPower (double power) {
         rollerTop.set(power);
         rollerBottom.set(power);
@@ -43,6 +47,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public void setRollerBottomPower (double power) {
         rollerBottom.set(power);
     }
+
     public boolean getRollerSensor(){
         return rollerSensor.get();
     }
@@ -52,12 +57,14 @@ public class IntakeSubsystem extends SubsystemBase {
     public boolean getRightPathSensor(){
         return rightPathSensor.get();
     }
+
     public double getBottomSpeed(){
         return rollerBottom.get();
     }
     public double getTopSpeed() {
         return rollerTop.get();
     }
+
     public void shutdown() {
         rollerTop.set(0);
         rollerBottom.set(0);
