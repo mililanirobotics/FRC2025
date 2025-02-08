@@ -16,7 +16,7 @@ public class AutoPivotMiddleCommand extends Command{
     }
     @Override
     public void execute(){
-        m_PivotSubsystem.setPivotPower(m_PivotSubsystem.getOutput(pivotConstant.kPivotMiddleCounts));
+        m_PivotSubsystem.setPivotPower(m_PivotSubsystem.getOutput());
         
     }
     @Override
@@ -25,6 +25,5 @@ public class AutoPivotMiddleCommand extends Command{
     }
     @Override
     public boolean isFinished(){
-        return m_PivotSubsystem.getPIDError() == 0;
-    }
+        return Math.abs(m_PivotSubsystem.getPIDError()) <= pivotConstant.kPivotTolerance;    }
 }

@@ -10,6 +10,8 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.AutonomousCommands.AutoIntakeCommand;
 import frc.robot.commands.AutonomousCommands.AutoOuttakeCommand;
+import frc.robot.commands.AutonomousCommands.AutoPivotDownComand;
+import frc.robot.commands.AutonomousCommands.AutoPivotUpCommand;
 import frc.robot.commands.AutonomousCommands.ElevatorGroundCommand;
 import frc.robot.commands.ManualCommands.ElevatorDownCommand;
 import frc.robot.commands.ManualCommands.ElevatorUpCommand;
@@ -17,39 +19,41 @@ import frc.robot.commands.ManualCommands.IntakeShutdownCommand;
 import frc.robot.commands.ManualCommands.PivotBackwardCommand;
 import frc.robot.commands.ManualCommands.PivotForwardCommand;
 import frc.robot.commands.ManualCommands.SwerveControlCommand;
-import frc.robot.commands.TestCommands.BottomRollerDownSpeedCommand;
-import frc.robot.commands.TestCommands.BottomRollerShutdownCommand;
-import frc.robot.commands.TestCommands.BottomRollerUpSpeedCommand;
-import frc.robot.commands.TestCommands.ElevatorTestDownSpeedCommand;
-import frc.robot.commands.TestCommands.ElevatorTestShutdownCommand;
-import frc.robot.commands.TestCommands.ElevatorTestUpSpeedCommand;
-import frc.robot.commands.TestCommands.PivotTestDownSpeedCommand;
-import frc.robot.commands.TestCommands.PivotTestShutdownSpeedCommand;
-import frc.robot.commands.TestCommands.PivotTestUpSpeedCommand;
-import frc.robot.commands.TestCommands.TopRollerDownSpeedCommand;
-import frc.robot.commands.TestCommands.TopRollerShutdownCommand;
-import frc.robot.commands.TestCommands.TopRollerUpSpeedCommand;
+import frc.robot.commands.TestCommands.TestEncoder;
+import frc.robot.commands.TestCommands.BottomRollerTestCommand.BottomRollerDownSpeedCommand;
+import frc.robot.commands.TestCommands.BottomRollerTestCommand.BottomRollerSetPowerCommand;
+import frc.robot.commands.TestCommands.BottomRollerTestCommand.BottomRollerShutdownCommand;
+import frc.robot.commands.TestCommands.BottomRollerTestCommand.BottomRollerUpSpeedCommand;
+import frc.robot.commands.TestCommands.ElevatorTestCommands.ElevatorTestDownSpeedCommand;
+import frc.robot.commands.TestCommands.ElevatorTestCommands.ElevatorTestSetPowerCommand;
+import frc.robot.commands.TestCommands.ElevatorTestCommands.ElevatorTestShutdownCommand;
+import frc.robot.commands.TestCommands.ElevatorTestCommands.ElevatorTestUpSpeedCommand;
+import frc.robot.commands.TestCommands.PivotTestCommands.PivotSetPowerCommand;
+import frc.robot.commands.TestCommands.PivotTestCommands.PivotTestDownSpeedCommand;
+import frc.robot.commands.TestCommands.PivotTestCommands.PivotTestShutdownSpeedCommand;
+import frc.robot.commands.TestCommands.PivotTestCommands.PivotTestUpSpeedCommand;
+import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerDownSpeedCommand;
+import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerSetPowerCommand;
+import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerShutdownCommand;
+import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerUpSpeedCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-
-import com.pathplanner.lib.commands.PathPlannerAuto;
-
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-public class RobotContainer {
-  //shuffleboard tabs
+public class RobotContainer { 
+  //Shuffleboard Tabs
   private final ShuffleboardTab teleopTab = Shuffleboard.getTab("Teleop");
   private final ShuffleboardTab testTranPos = Shuffleboard.getTab("Test_Tran_Pos");
   private final ShuffleboardTab testTranVel = Shuffleboard.getTab("Test_Tran_Vel");
@@ -58,8 +62,8 @@ public class RobotContainer {
   private final ShuffleboardTab testPos = Shuffleboard.getTab("Test_Pos");
   private final ShuffleboardTab testGyroData = Shuffleboard.getTab("Test_Gyro_Data");
 
-  //Subsystem intinitialized
-  private final SwerveDriveSubsystem swerveDriveSubsystem = new SwerveDriveSubsystem(
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final SwerveDriveSubsystem m_SwerveDriveSubsystem = new SwerveDriveSubsystem(    
     testTranPos,
     testTranVel,
     testRotPos,
@@ -67,21 +71,24 @@ public class RobotContainer {
     testPos,
     testGyroData
   );
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
   private final GenericHID controller1 = new GenericHID(0);
   private final GenericHID controller2 = new GenericHID(1);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+  private final PIDController m_PidController = new PIDController(0.000001, 0, 0);
 
-  private final Field2d field = new Field2d();
-  private final PathPlannerAuto auto = new PathPlannerAuto("TEST1");
+  private final CommandXboxController m_driverController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
+
+
 
   public RobotContainer() {
     configureBindings();
-
-    swerveDriveSubsystem.setDefaultCommand(new SwerveControlCommand(
-      swerveDriveSubsystem, 
+    
+    m_SwerveDriveSubsystem.setDefaultCommand(new SwerveControlCommand(
+      m_SwerveDriveSubsystem, 
       controller1
       )
     );
@@ -89,43 +96,79 @@ public class RobotContainer {
 
   
   private void configureBindings() {
-    // new Trigger(m_exampleSubsystem::exampleCondition)
-    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-
+    ///////////////////////////////////////////////////////////////////////////////////
+    //TEST COMMANDS
+    ///////////////////////////////////////////////////////////////////////////////////
     
 
-    //TEST COMMANDS 
-    //new POVButton(controller1, GamepadConstants.kDpadLeft).onTrue(new ElevatorTestDownSpeedCommand(m_elevatorSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kAButtonPort)
-        .onTrue(new ElevatorTestDownSpeedCommand(m_elevatorSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kYButtonPort)
-        .onTrue(new ElevatorTestUpSpeedCommand(m_elevatorSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kBButtonPort)
-        .onTrue(new ElevatorTestShutdownCommand(m_elevatorSubsystem, controller1));
 
-    new POVButton(controller1, GamepadConstants.kDpadDown)
-        .onTrue(new PivotTestDownSpeedCommand(m_pivotSubsystem, controller1));
-    new POVButton(controller1, GamepadConstants.kDpadUp)
-        .onTrue(new PivotTestUpSpeedCommand(m_pivotSubsystem, controller1));
-    new POVButton(controller1, GamepadConstants.kDpadRight)
-        .onTrue(new PivotTestShutdownSpeedCommand(m_pivotSubsystem, controller1));
+    //elevator test commands
 
     new JoystickButton(controller2, GamepadConstants.kAButtonPort)
-        .onTrue(new TopRollerDownSpeedCommand(m_intakeSubsystem, controller2));
+        .onTrue(new ElevatorTestDownSpeedCommand(m_elevatorSubsystem, controller2));
     new JoystickButton(controller2, GamepadConstants.kYButtonPort)
-        .onTrue(new TopRollerUpSpeedCommand(m_intakeSubsystem, controller2));
+        .onTrue(new ElevatorTestUpSpeedCommand(m_elevatorSubsystem, controller2));
     new JoystickButton(controller2, GamepadConstants.kBButtonPort)
-        .onTrue(new TopRollerShutdownCommand(m_intakeSubsystem, controller2));
+        .onTrue(new ElevatorTestShutdownCommand(m_elevatorSubsystem, controller2));
+    new JoystickButton(controller2, GamepadConstants.kXButtonPort)
+        .onTrue(new ElevatorTestSetPowerCommand(m_elevatorSubsystem, controller2));
+    
+
+    //pivot test commands
 
     new POVButton(controller2, GamepadConstants.kDpadDown)
-        .onTrue(new BottomRollerDownSpeedCommand(m_intakeSubsystem, controller2));
+        .onTrue(new PivotTestDownSpeedCommand(m_pivotSubsystem, controller2));
     new POVButton(controller2, GamepadConstants.kDpadUp)
-        .onTrue(new BottomRollerUpSpeedCommand(m_intakeSubsystem, controller2));
+        .onTrue(new PivotTestUpSpeedCommand(m_pivotSubsystem, controller2));
     new POVButton(controller2, GamepadConstants.kDpadRight)
-        .onTrue(new BottomRollerShutdownCommand(m_intakeSubsystem, controller2));
+        .onTrue(new PivotTestShutdownSpeedCommand(m_pivotSubsystem, controller2));
+    new POVButton(controller2, GamepadConstants.kDpadLeft)
+        .onTrue(new PivotSetPowerCommand(m_pivotSubsystem, controller2));
+
+
+    //top roller test commands
+
+    new JoystickButton(controller1, GamepadConstants.kAButtonPort)
+        .onTrue(new TopRollerDownSpeedCommand(m_intakeSubsystem, controller1));
+    new JoystickButton(controller1, GamepadConstants.kYButtonPort)
+        .onTrue(new TopRollerUpSpeedCommand(m_intakeSubsystem, controller1));
+    new JoystickButton(controller1, GamepadConstants.kBButtonPort)
+        .onTrue(new TopRollerShutdownCommand(m_intakeSubsystem, controller1));
+    new JoystickButton(controller1, GamepadConstants.kXButtonPort)
+        .onTrue(new TopRollerSetPowerCommand(m_intakeSubsystem, controller1));
     
-    //Intake
+
+
+    
+    //bottom roller test commands
+
+    new POVButton(controller1, GamepadConstants.kDpadDown)
+        .onTrue(new BottomRollerDownSpeedCommand(m_intakeSubsystem, controller1));
+    new POVButton(controller1, GamepadConstants.kDpadUp)
+        .onTrue(new BottomRollerUpSpeedCommand(m_intakeSubsystem, controller1));
+    new POVButton(controller1, GamepadConstants.kDpadRight)
+        .onTrue(new BottomRollerShutdownCommand(m_intakeSubsystem, controller1));
+    // new POVButton(controller1, GamepadConstants.kDpadLeft)
+    //     .onTrue(new BottomRollerSetPowerCommand(m_intakeSubsystem, controller1));
+
+
+
+    new JoystickButton(controller1, GamepadConstants.kLeftBumperPort)
+        .onTrue(new AutoPivotDownComand(m_pivotSubsystem));
+    new JoystickButton(controller1, GamepadConstants.kRightBumperPort)
+        .onTrue(new AutoPivotUpCommand(m_pivotSubsystem));
+    
+    
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    //TeleOp Commands
+    ///////////////////////////////////////////////////////////////////////////////////
+
+
+
+    ////Intake
+
     //  new Trigger(m_intakeSubsystem::getRollerSensor)
     //      .onTrue(new AutoIntakeCommand(m_intakeSubsystem, controller1));
     // new JoystickButton(controller1, GamepadConstants.kXButtonPort)
@@ -134,24 +177,31 @@ public class RobotContainer {
     //    .onTrue(new IntakeShutdownCommand(m_intakeSubsystem, controller1));
 
        
-    //Elevator buttons
+    ////Elevator buttons
+
     // new JoystickButton(controller2, GamepadConstants.kLeftBumperPort)
     //     .onTrue(new ElevatorDownCommand(m_elevatorSubsystem, controller2));
-    //new JoystickButton(controller, GamepadConstants.kRightBumperPort)
-        //.onTrue(new ElevatorUpCommand(m_elevatorSubsystem, controller)); 
+    // new JoystickButton(controller2, GamepadConstants.kRightBumperPort)
+    //     .onTrue(new ElevatorUpCommand(m_elevatorSubsystem, controller2)); 
 
 
-    //Pivot buttons
-    //new JoystickButton(controller, GamepadConstants.kDpadUp)
+    ////Pivot buttons
+
+    //new POVButton(controller, GamepadConstants.kDpadUp)
        // .onTrue(new PivotForwardCommand(m_pivotSubsystem, controller));
-    // new JoystickButton(controller1, GamepadConstants.kRightBumperPort)
-    //     .onTrue(new PivotBackwardCommand(m_pivotSubsystem, controller1));
+    // probably change later 
+    //new JoystickButton(controller1, GamepadConstants.kRightBumperPort)
+       //  .onTrue(new PivotBackwardCommand(m_pivotSubsystem, controller1));
+
 
 
   }
-
   
   public Command getAutonomousCommand() {
     return Autos.exampleAuto(m_exampleSubsystem);
+  }
+
+  public void zeroYaw() {
+    m_SwerveDriveSubsystem.zeroOutGyro();
   }
 }

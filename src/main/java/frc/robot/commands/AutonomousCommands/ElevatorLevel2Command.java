@@ -20,7 +20,7 @@ public class ElevatorLevel2Command extends Command {
 
     @Override
     public void execute(){
-        m_elevatorSubsystem.setPower(m_elevatorSubsystem.getOutput(111));
+        m_elevatorSubsystem.setPower(m_elevatorSubsystem.getOutput());
     }
     @Override
     public void end(boolean interupted){

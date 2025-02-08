@@ -13,11 +13,11 @@ public class AutoPivotUpCommand extends Command{
     }
     @Override
     public void initialize(){
-        m_PivotSubsystem.setPoint(pivotConstant.kPivotDownCounts);
+        m_PivotSubsystem.setPoint(pivotConstant.kPivotUpCounts);
     }
     @Override
     public void execute(){
-        m_PivotSubsystem.setPivotPower(m_PivotSubsystem.getOutput(pivotConstant.kPivotDownCounts));
+        m_PivotSubsystem.setPivotPower(m_PivotSubsystem.getOutput());
     }
     @Override
     public void end(boolean interupted){
@@ -25,6 +25,5 @@ public class AutoPivotUpCommand extends Command{
     }
     @Override
     public boolean isFinished(){
-        return m_PivotSubsystem.getPIDError() == 0;
-    }
+        return Math.abs(m_PivotSubsystem.getPIDError()) <= pivotConstant.kPivotTolerance;    }
 }

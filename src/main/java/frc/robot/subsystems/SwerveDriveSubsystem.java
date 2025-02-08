@@ -226,7 +226,7 @@ public class SwerveDriveSubsystem extends SubsystemBase{
     */
     public void zeroOutGyro() {
         System.out.println("Gyro Connected: "+navX.isConnected());
-        navX.reset();
+        navX.zeroYaw();
     }
 
     /**
@@ -239,6 +239,14 @@ public class SwerveDriveSubsystem extends SubsystemBase{
 
     public Rotation2d getYawRotation() {
         return Rotation2d.fromDegrees(getYaw());
+    }
+
+    public Rotation2d getPitchRotation() {
+        return Rotation2d.fromRadians(getPitch());
+    }
+
+    public Rotation2d getRollRotation() {
+        return Rotation2d.fromDegrees(getRoll());
     }
 
     public double getYawReverse() {
@@ -299,13 +307,14 @@ public class SwerveDriveSubsystem extends SubsystemBase{
     }
 
     /**
-     * Returns the yaw value of the Navx assuming CCW pos and continuous (in degrees)
+     * Returns the yaw value of the Navx assuming CCW pos and continuous [not????!?!?!?] (in degrees)
      * @return The adjusted degrees
      */
     public double getDegrees() {
-        double rawDegrees = getYaw() - 180;
-        rawDegrees = rawDegrees % 360;
+        double rawDegrees = getYawReverse();//-180
+        // rawDegrees = rawDegrees % 360;
         return rawDegrees < 0 ? rawDegrees + 360 : rawDegrees;
+        // return 0;
     }
 
     /**
@@ -497,6 +506,10 @@ public class SwerveDriveSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Roll", getRoll());
+        SmartDashboard.putNumber("Pitch", getPitch());
+        SmartDashboard.updateValues();
+
         //updates odometry
         odometry.update(
             /*getYawRotation(),*/

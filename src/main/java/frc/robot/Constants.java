@@ -6,11 +6,11 @@ package frc.robot;
 
 import java.util.List;
 
-import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import com.pathplanner.lib.config.PIDConstants;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N2;
@@ -67,36 +67,7 @@ public final class Constants {
     public final static int kDpadDown = 180;
 
   //Deadzone value
-    public final static double kDeadzone = 0.2; 
-  }
-  public static class PortConstants {
-    public final static int kRightElevatorPort = 15;
-    public final static int kLeftElevatorPort = 14;
-
-    public final static int kRollerSensorPort = 13;
-    public final static int kLeftPathSensor = 12;
-    public final static int kRightPathSensor = 11;
-
-    public final static int kRollerTopPort = 16;
-    public final static int kRollerBottomPort = 17;
-
-    public final static int kPivotPort = 18;
-  }
-
-  // public static class PIDConstants {
-  //   public static final double kP = 0;
-  //   public static final double kI = 0;
-  //   public static final double kD = 0;
-  // }
-
-  public static class pivotConstant {
-    public static final double kPivotDownCounts = 102849; // Placeholder value, needs to be tested
-    public static final double kPivotUpCounts = 102849; // Placeholder value, needs to be tested
-    public static final double kPivotMiddleCounts = 102849; // Placeholder value, needs to be tested
-
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
+    public final static double kDeadzone = 0.2;
   }
 
   public static class SwerveModuleConstants {
@@ -114,26 +85,26 @@ public final class Constants {
     public static final int kRotationCurrentLimit = 25;
 
     // Drive Port Constants
-    public static final int kLeftFrontWheelPort = 15;
-    public static final int kLeftFrontRotationPort = 4;
+    public static final int kLeftFrontWheelPort = 19;
+    public static final int kLeftFrontRotationPort = 16;
 
-    public static final int kRightFrontWheelPort = 21;
-    public static final int kRightFrontRotationPort = 20;
+    public static final int kRightFrontWheelPort = 9;
+    public static final int kRightFrontRotationPort = 23;
 
-    public static final int kLeftBackWheelPort = 9;
-    public static final int kLeftBackRotationPort = 23;
+    public static final int kLeftBackWheelPort = 21;
+    public static final int kLeftBackRotationPort = 20;
 
-    public static final int kRightBackWheelPort = 19;
-    public static final int kRightBackRotationPort = 18;
+    public static final int kRightBackWheelPort = 24;
+    public static final int kRightBackRotationPort = 4;
 
-    public static final int kLeftFrontCANCoderPort = 8;
-    public static final int kRightFrontCANCoderPort = 2;
-    public static final int kLeftBackCANCoderPort = 11;
-    public static final int kRightBackCANCoderPort = 17;
-    public static final double kLeftFrontCANCoderOffset = 0.018310546875;
-    public static final double kRightFrontCANCoderOffset = -0.063232421875;
-    public static final double kLeftBackCANCoderOffset = -0.23486328125;
-    public static final double kRightBackCANCoderOffset = 0.19921875;
+    public static final int kLeftFrontCANCoderPort = 17;
+    public static final int kRightFrontCANCoderPort = 11;
+    public static final int kLeftBackCANCoderPort = 2;
+    public static final int kRightBackCANCoderPort = 8;
+    public static final double kLeftFrontCANCoderOffset = 0.203857421875;
+    public static final double kRightFrontCANCoderOffset = -0.2333984375;
+    public static final double kLeftBackCANCoderOffset = -0.0693359375;
+    public static final double kRightBackCANCoderOffset = 0.027099609375;
 
     public static final int kLeftBackIndex = 2;
     public static final int kRightBackIndex = 3;
@@ -293,8 +264,7 @@ public final class Constants {
         ) 
     );
   }
-
-  public static class AutoConstants {
+    public static class AutoConstants {
     //auto constraints 
     public static final double kAutoDriveMaxMetersPerSecond = 3;
     public static final double kAutoDriveMaxAcceleration = kAutoDriveMaxMetersPerSecond * 8;
@@ -329,7 +299,7 @@ public final class Constants {
       kIController, 
       kDController
     );
-
+      //Does this work isntead?
     public static final PIDConstants thetaConstants = new PIDConstants(
       kPThetaControllerP,
       kIThetaControllerP, 
@@ -360,5 +330,32 @@ public final class Constants {
     public static final List<Translation2d> testPath = List.of(
       new Translation2d(1, 0)
     );
+  }
+
+
+  public static class PortConstants {
+    public final static int kRightElevatorPort = 15;
+    public final static int kLeftElevatorPort = 14;
+
+    public final static int kRollerSensorPort = 13;
+    public final static int kLeftPathSensor = 12;
+    public final static int kRightPathSensor = 11;
+
+    public final static int kRollerTopPort = 35;
+    public final static int kRollerBottomPort = 17;
+
+    public final static int kPivotPort = 18;
+  }
+  // public static class PIDConstants {
+  //   public static final double kP = 0;
+  //   public static final double kI = 0;
+  //   public static final double kD = 0;
+  // }
+  public static class pivotConstant {
+    public static final double kPivotDownCounts = -47; // Placeholder value, needs to be tested
+    public static final double kPivotUpCounts = 0; // Placeholder value, needs to be tested 102849
+    public static final double kPivotMiddleCounts = 0; // Placeholder value, needs to be tested 102849
+
+    public static final double kPivotTolerance = .5;
   }
 }

@@ -41,7 +41,7 @@ public class SwerveControlCommand extends Command{
         // Grabs Joystick Inputs as Speed Inputs
         double xSpeed = gamepad.getRawAxis(GamepadConstants.kLeftYJoystickPort);
         double ySpeed = gamepad.getRawAxis(GamepadConstants.kLeftXJoystickPort);
-        double turningSpeed = -gamepad.getRawAxis(GamepadConstants.kRightXJoystickPort);
+        double turningSpeed = gamepad.getRawAxis(GamepadConstants.kRightXJoystickPort);
 
         if(gamepad.getRawAxis(GamepadConstants.kRightTriggerPort) >= 0.5) {
             xSpeed *= 0.3;
@@ -72,7 +72,7 @@ public class SwerveControlCommand extends Command{
 
         // Temporary CANCoder print
         m_SwerveDriveSubsystem.getCANCoderReading();
-        SmartDashboard.putNumber("Naxv Yaw", m_SwerveDriveSubsystem.getYaw());
+        SmartDashboard.putNumber("Naxv Yaw", m_SwerveDriveSubsystem.getYawReverse());
         SmartDashboard.putNumber("Naxv Degrees", m_SwerveDriveSubsystem.getDegrees());
         SmartDashboard.putNumber("Radians", m_SwerveDriveSubsystem.getRad());
     }
