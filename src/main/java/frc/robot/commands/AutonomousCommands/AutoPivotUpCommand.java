@@ -2,6 +2,7 @@ package frc.robot.commands.AutonomousCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.pivotConstant;
+import frc.robot.Constants.pivotConstant.PivotPositions;
 import frc.robot.subsystems.PivotSubsystem;
 
 public class AutoPivotUpCommand extends Command{
@@ -13,7 +14,8 @@ public class AutoPivotUpCommand extends Command{
     }
     @Override
     public void initialize(){
-        m_PivotSubsystem.setPoint(pivotConstant.kPivotUpCounts);
+        m_PivotSubsystem.setPoint(pivotConstant.kPivotUpPosition);
+        m_PivotSubsystem.setCurrentState(PivotPositions.STARTCONFIG);
     }
     @Override
     public void execute(){

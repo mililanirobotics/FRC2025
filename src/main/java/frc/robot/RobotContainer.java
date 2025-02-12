@@ -13,8 +13,10 @@ import frc.robot.commands.AutonomousCommands.AutoOuttakeCommand;
 import frc.robot.commands.AutonomousCommands.AutoPivotDownComand;
 import frc.robot.commands.AutonomousCommands.AutoPivotUpCommand;
 import frc.robot.commands.AutonomousCommands.ElevatorGroundCommand;
+import frc.robot.commands.ManualCommands.EjectCommand;
 import frc.robot.commands.ManualCommands.ElevatorDownCommand;
 import frc.robot.commands.ManualCommands.ElevatorUpCommand;
+import frc.robot.commands.ManualCommands.IntakeCommand;
 import frc.robot.commands.ManualCommands.IntakeShutdownCommand;
 import frc.robot.commands.ManualCommands.PivotBackwardCommand;
 import frc.robot.commands.ManualCommands.PivotForwardCommand;
@@ -128,26 +130,26 @@ public class RobotContainer {
 
     //top roller test commands
 
-    new JoystickButton(controller1, GamepadConstants.kAButtonPort)
-        .onTrue(new TopRollerDownSpeedCommand(m_intakeSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kYButtonPort)
-        .onTrue(new TopRollerUpSpeedCommand(m_intakeSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kBButtonPort)
-        .onTrue(new TopRollerShutdownCommand(m_intakeSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kXButtonPort)
-        .onTrue(new TopRollerSetPowerCommand(m_intakeSubsystem, controller1));
+    // new JoystickButton(controller1, GamepadConstants.kAButtonPort)
+    //     .onTrue(new TopRollerDownSpeedCommand(m_intakeSubsystem, controller1));
+    // new JoystickButton(controller1, GamepadConstants.kYButtonPort)
+    //     .onTrue(new TopRollerUpSpeedCommand(m_intakeSubsystem, controller1));
+    // new JoystickButton(controller1, GamepadConstants.kBButtonPort)
+    //     .onTrue(new TopRollerShutdownCommand(m_intakeSubsystem, controller1));
+    // new JoystickButton(controller1, GamepadConstants.kXButtonPort)
+    //     .onTrue(new TopRollerSetPowerCommand(m_intakeSubsystem, controller1));
     
 
 
     
     //bottom roller test commands
 
-    new POVButton(controller1, GamepadConstants.kDpadDown)
-        .onTrue(new BottomRollerDownSpeedCommand(m_intakeSubsystem, controller1));
-    new POVButton(controller1, GamepadConstants.kDpadUp)
-        .onTrue(new BottomRollerUpSpeedCommand(m_intakeSubsystem, controller1));
-    new POVButton(controller1, GamepadConstants.kDpadRight)
-        .onTrue(new BottomRollerShutdownCommand(m_intakeSubsystem, controller1));
+    // new POVButton(controller1, GamepadConstants.kDpadDown)
+    //     .onTrue(new BottomRollerDownSpeedCommand(m_intakeSubsystem, controller1));
+    // new POVButton(controller1, GamepadConstants.kDpadUp)
+    //     .onTrue(new BottomRollerUpSpeedCommand(m_intakeSubsystem, controller1));
+    // new POVButton(controller1, GamepadConstants.kDpadRight)
+    //     .onTrue(new BottomRollerShutdownCommand(m_intakeSubsystem, controller1));
     // new POVButton(controller1, GamepadConstants.kDpadLeft)
     //     .onTrue(new BottomRollerSetPowerCommand(m_intakeSubsystem, controller1));
 
@@ -176,7 +178,11 @@ public class RobotContainer {
     // new JoystickButton(controller1, GamepadConstants.kBButtonPort)
     //    .onTrue(new IntakeShutdownCommand(m_intakeSubsystem, controller1));
 
+    new JoystickButton(controller1, GamepadConstants.kBButtonPort)
+        .onTrue(new IntakeCommand(m_intakeSubsystem, m_pivotSubsystem.getCurrentState(), controller1));
        
+    new JoystickButton(controller1, GamepadConstants.kAButtonPort)
+        .onTrue(new EjectCommand(m_intakeSubsystem, m_pivotSubsystem.getCurrentState(), controller1));
     ////Elevator buttons
 
     // new JoystickButton(controller2, GamepadConstants.kLeftBumperPort)

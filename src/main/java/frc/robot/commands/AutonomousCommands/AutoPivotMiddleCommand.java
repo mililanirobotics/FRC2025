@@ -2,6 +2,7 @@ package frc.robot.commands.AutonomousCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.pivotConstant;
+import frc.robot.Constants.pivotConstant.PivotPositions;
 import frc.robot.subsystems.PivotSubsystem;
 
 public class AutoPivotMiddleCommand extends Command{
@@ -12,7 +13,8 @@ public class AutoPivotMiddleCommand extends Command{
     }
     @Override
     public void initialize(){
-        m_PivotSubsystem.setPoint(pivotConstant.kPivotMiddleCounts);
+        m_PivotSubsystem.setPoint(pivotConstant.kPivotMiddlePosition);
+        m_PivotSubsystem.setCurrentState(PivotPositions.ALGAE);
     }
     @Override
     public void execute(){

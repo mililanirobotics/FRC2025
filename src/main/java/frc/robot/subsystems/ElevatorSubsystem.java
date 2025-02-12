@@ -34,8 +34,6 @@ public class ElevatorSubsystem extends SubsystemBase{
     public ElevatorSubsystem(){
         rightElevatorMotor = new SparkFlex(PortConstants.kRightElevatorPort, MotorType.kBrushless);
         leftElevatorMotor = new SparkFlex(PortConstants.kLeftElevatorPort, MotorType.kBrushless);
-        
-
 
         rightSparkFlexConfig = new SparkFlexConfig();
         rightSparkFlexConfig
@@ -49,7 +47,7 @@ public class ElevatorSubsystem extends SubsystemBase{
             .idleMode(IdleMode.kBrake);
        leftElevatorMotor.configure(leftSparkFlexConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         pidController = new PIDController(0, 0, 0);
-        encoder = new Encoder(0, 1);
+        // encoder = new Encoder(0, 1);
 
         testSpeed = 0;
         
@@ -80,6 +78,10 @@ public class ElevatorSubsystem extends SubsystemBase{
 
 
     //Get information
+    public double getSpeed() {
+        return testSpeed;
+    }
+
     public double getRightSpeed() {
         return rightElevatorMotor.get();
     }

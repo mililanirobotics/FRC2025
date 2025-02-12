@@ -264,7 +264,8 @@ public final class Constants {
         ) 
     );
   }
-    public static class AutoConstants {
+  
+  public static class AutoConstants {
     //auto constraints 
     public static final double kAutoDriveMaxMetersPerSecond = 3;
     public static final double kAutoDriveMaxAcceleration = kAutoDriveMaxMetersPerSecond * 8;
@@ -332,7 +333,6 @@ public final class Constants {
     );
   }
 
-
   public static class PortConstants {
     public final static int kRightElevatorPort = 15;
     public final static int kLeftElevatorPort = 14;
@@ -345,17 +345,42 @@ public final class Constants {
     public final static int kRollerBottomPort = 17;
 
     public final static int kPivotPort = 18;
+    public final static int kPivotEncoderPort = 1;
   }
+  
   // public static class PIDConstants {
   //   public static final double kP = 0;
   //   public static final double kI = 0;
   //   public static final double kD = 0;
   // }
-  public static class pivotConstant {
-    public static final double kPivotDownCounts = -47; // Placeholder value, needs to be tested
-    public static final double kPivotUpCounts = 0; // Placeholder value, needs to be tested 102849
-    public static final double kPivotMiddleCounts = 0; // Placeholder value, needs to be tested 102849
 
-    public static final double kPivotTolerance = .5;
+  public static class pivotConstant {
+    public static final double kPivotZeroPosition = .665;
+
+    /**
+    Built in Encoder positons
+    Down = -47
+    Up = 0
+    */
+
+    public static final double kPivotDownPosition = .228; // Placeholder value, needs to be tested
+    public static final double kPivotUpPosition = 0.0015; // Placeholder value, needs to be tested 102849
+    public static final double kPivotMiddlePosition = 0; // Placeholder value, needs to be tested 102849
+
+    public static final double kPivotTolerance = .0025;
+
+    public static enum PivotPositions {
+      INTAKE,
+      ALGAE,
+      CORALSTATION,
+      STARTCONFIG,
+      STORAGE
+    }
+  }
+
+  public static class IntakeConstants {
+    public static final double IntakePercentOutput = .6;
+    public static final double AlgaePercentOutput = 0.25;
+    public static final double ScoringPercentOutput = .6;
   }
 }

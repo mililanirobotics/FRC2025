@@ -17,7 +17,7 @@ public class PivotForwardCommand extends Command{
     }
     @Override
     public void initialize(){
-        m_PivotSubsystem.setPoint(pivotConstant.kPivotDownCounts);
+        m_PivotSubsystem.setPoint(pivotConstant.kPivotDownPosition);
     }
     @Override
     public void execute(){

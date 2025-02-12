@@ -11,21 +11,29 @@ import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.PortConstants;
+import frc.robot.Constants.pivotConstant;
+import frc.robot.Constants.pivotConstant.PivotPositions;
 
 public class PivotSubsystem extends SubsystemBase {
     private SparkFlex pivotMotor;
     private SparkFlexConfig pivotConfig;
-    private MAXMotionConfig maxMotionConfig;
-    private SparkClosedLoopController m_controller;
+    private DutyCycleEncoder pivotEncoder;
+
+    // private MAXMotionConfig maxMotionConfig;
+    // private SparkClosedLoopController m_controller;
     private PIDController pidController;
-    private Encoder encoder;
+    // private Encoder encoder;
+   
     private double testSpeed;
     private double setPoint;
+
+    private PivotPositions currentState;
 
     public PivotSubsystem () {
         pivotMotor = new SparkFlex(PortConstants.kPivotPort, MotorType.kBrushless);
@@ -40,23 +48,21 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig
             .inverted(false)
             .idleMode(IdleMode.kBrake);
-            // .closedLoop.apply(maxMotionConfig)
+            // .closed\Loop.apply(maxMotionConfig)
             // .pid(.0001, 0, 0);
 
         pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-         pidController = new PIDController(0.02, 0.001, 0);
-         // encoder = new Encoder(7, 8); //temp holder numbers4
+         pidController = new PIDController(4, 0.1, 0);
+         // encoder = new Encoder(7, 8); //temp holder numbers4 .001
         
-
+        pivotEncoder = new DutyCycleEncoder(1, 1, pivotConstant.kPivotZeroPosition);
         testSpeed = 0;
+        currentState = PivotPositions.STARTCONFIG;
     }
 
+    //SETTER METHODS
     public void setPivotPower (double power) {
         pivotMotor.set(power);
-    }
-
-    public double getPIDError() {
-        return pidController.getError();
     }
 
     public void setPoint(double target){
@@ -65,33 +71,46 @@ public class PivotSubsystem extends SubsystemBase {
         setPoint = target;
     }
 
+    public void setCurrentState(PivotPositions state) {
+        currentState = state;
+    }
+
+    //GETTER METHODS
+    public double getSpeed() {
+        return pivotMotor.get();
+    }
+
     public double getSetPoint(){
         return setPoint;
+    }
+
+    public PivotPositions getCurrentState() {
+        return currentState;
+    }
+
+    public double getPIDError() {
+        return pidController.getError();
+    }
+
+    public double getPivotPosition(){
+        return pivotMotor.getEncoder().getPosition();
+    }
+    
+    public double getOutput() {
+        return -pidController.calculate(getShaftEncoder());
+    }
+
+    public double getShaftEncoder() {
+        return pivotEncoder.get();
     }
 
     // public int getEncoder() {
     //     return encoder.get();
     // }
 
-    public double getPivotPosition(){
-        return pivotMotor.getEncoder().getPosition();
-    }
-
     // public double getPivotEncoder(){
     //     return pivotMotor.getAbsoluteEncoder().getPosition();
     // }
-
-    public double getSpeed() {
-        return pivotMotor.get();
-    }
-    
-    public double getOutput() {
-        return pidController.calculate(getPivotPosition());
-    }
-
-    public void shutdown () {
-        pivotMotor.set(0);
-    }
 
     /*///////////////////////////
      * Test Methods
@@ -114,6 +133,11 @@ public class PivotSubsystem extends SubsystemBase {
         testSpeed = 0;
     }
 
+    //SHUTDOWN METHODS
+    public void shutdown () {
+        pivotMotor.set(0);
+    }
+
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Pivot speed: ", testSpeed);
@@ -121,6 +145,9 @@ public class PivotSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Pivot Output: ", getOutput());
         SmartDashboard.putNumber("Pivot Setpoint", getSetPoint());
         SmartDashboard.putNumber("Pivot Error: ", getPIDError());
+        SmartDashboard.putNumber("Through Bore Encoder:", getShaftEncoder());
+        SmartDashboard.putNumber("DSFFSDFSFS:", getCurrentState() == PivotPositions.STARTCONFIG ? 3.1 : 0
+        );
         SmartDashboard.updateValues();
     }
 }
