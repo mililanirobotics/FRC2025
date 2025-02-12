@@ -302,8 +302,8 @@ public class SwerveDriveSubsystem extends SubsystemBase{
      * @return The adjusted degrees
      */
     public double getDegrees() {
-        double rawDegrees = getYaw() - 180;
-        rawDegrees = rawDegrees % 360;
+        double rawDegrees = getYawReverse();
+        // rawDegrees = rawDegrees % 360;
         return rawDegrees < 0 ? rawDegrees + 360 : rawDegrees;
     }
 

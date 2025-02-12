@@ -63,10 +63,10 @@ public class Constants {
     public static final int kRightFrontCANCoderPort = 2;
     public static final int kLeftBackCANCoderPort = 11;
     public static final int kRightBackCANCoderPort = 17;
-    public static final double kLeftFrontCANCoderOffset = 0.018310546875;
-    public static final double kRightFrontCANCoderOffset = -0.063232421875;
-    public static final double kLeftBackCANCoderOffset = -0.23486328125;
-    public static final double kRightBackCANCoderOffset = 0.19921875;
+    public static final double kLeftFrontCANCoderOffset = 0.273193359375;
+    public static final double kRightFrontCANCoderOffset = 0.421142578125;
+    public static final double kLeftBackCANCoderOffset = -0.009765625;
+    public static final double kRightBackCANCoderOffset = 0.4853515625;
 
     public static final int kLeftBackIndex = 2;
     public static final int kRightBackIndex = 3;
