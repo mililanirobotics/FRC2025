@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Commands.SwerveControlCommand;
+import frc.robot.Commands.SwerveControlCommand2;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.Subsystems.SwerveDriveSubsystem;
 
@@ -44,7 +44,7 @@ public class RobotContainer {
   public RobotContainer() {
     configureBindings();
 
-    swerveDriveSubsystem.setDefaultCommand(new SwerveControlCommand(
+    swerveDriveSubsystem.setDefaultCommand(new SwerveControlCommand2(
       swerveDriveSubsystem, 
       primaryGamepad
       )

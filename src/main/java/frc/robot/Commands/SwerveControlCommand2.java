@@ -13,7 +13,7 @@ import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.Constants.DriveConstants;
 
 
-public class SwerveControlCommand extends Command{
+public class SwerveControlCommand2 extends Command{
     private ChassisSpeeds chassisSpeeds;
 
     // Declaring the Subsystem
@@ -24,7 +24,7 @@ public class SwerveControlCommand extends Command{
     
     private GenericHID gamepad;
 
-    public SwerveControlCommand(SwerveDriveSubsystem swerveDriveSubsystem, GenericHID gamepad) {
+    public SwerveControlCommand2(SwerveDriveSubsystem swerveDriveSubsystem, GenericHID gamepad) {
         m_SwerveDriveSubsystem = swerveDriveSubsystem;
         this.gamepad = gamepad;
 
