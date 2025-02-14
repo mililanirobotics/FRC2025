@@ -1,0 +1,31 @@
+package frc.robot.commands.AutonomousCommands;
+
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.GamepadConstants;
+import frc.robot.subsystems.IntakeSubsystem;
+
+public class AutoIntakeCommand extends Command{
+    private IntakeSubsystem m_intakeSubsystem;
+    private GenericHID m_controller;
+    public AutoIntakeCommand(IntakeSubsystem intakeSubsystem, GenericHID controller){
+        m_intakeSubsystem = intakeSubsystem;
+        m_controller = controller;
+        addRequirements(m_intakeSubsystem);
+    }
+    @Override
+    public void initialize(){
+    }
+    @Override
+    public void execute(){
+    m_intakeSubsystem.setRollerPower(0.6);
+    }
+    @Override
+    public void end(boolean interupted){
+    m_intakeSubsystem.shutdown();
+    }
+    @Override
+    public boolean isFinished(){
+    return !m_intakeSubsystem.getLeftPathSensor() || !m_intakeSubsystem.getRightPathSensor() || m_controller.getRawButton(GamepadConstants.kBButtonPort);
+    }
+}
