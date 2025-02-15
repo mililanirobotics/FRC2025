@@ -38,11 +38,13 @@ import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerDownSpeedC
 import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerSetPowerCommand;
 import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerShutdownCommand;
 import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerUpSpeedCommand;
+import frc.robot.commands.VisionCommands.AlignCenterCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -78,6 +80,7 @@ public class RobotContainer {
   private final GenericHID controller1 = new GenericHID(0);
   private final GenericHID controller2 = new GenericHID(1);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+  private final LimelightSubsystem m_LimelightSubsystem = new LimelightSubsystem();
   private final PIDController m_PidController = new PIDController(0.000001, 0, 0);
 
   private final CommandXboxController m_driverController =
@@ -199,7 +202,9 @@ public class RobotContainer {
     //new JoystickButton(controller1, GamepadConstants.kRightBumperPort)
        //  .onTrue(new PivotBackwardCommand(m_pivotSubsystem, controller1));
 
-
+    //Vison offset buttons
+    new POVButton(controller1, GamepadConstants.kDpadLeft)
+      .onTrue(new AlignCenterCommand(m_SwerveDriveSubsystem, m_LimelightSubsystem));
 
   }
   

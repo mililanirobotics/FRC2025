@@ -354,6 +354,21 @@ public final class Constants {
   //   public static final double kD = 0;
   // }
 
+  public static class LimelightConstants {
+    public static final double kLeftAlignOffset = 14.49; //Testing
+    public static final double kRightAlignOffset = 0; //Testing
+
+    public static enum VisionConstants {
+      LEFTCORAL,
+      RIGHTCORAL
+    }
+
+    public static final double kAlignCenterP = 0.000001;
+    public static final double kAlignCenterI = 0;
+    public static final double kAlignCenterD = 0;
+    public static final double kAlignCenterTolerance = 0.2; //Temp
+  }
+
   public static class pivotConstant {
     public static final double kPivotZeroPosition = .665;
 
