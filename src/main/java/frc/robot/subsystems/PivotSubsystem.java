@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -52,7 +53,7 @@ public class PivotSubsystem extends SubsystemBase {
             // .pid(.0001, 0, 0);
 
         pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-         pidController = new PIDController(4, 0.1, 0);
+        pidController = new PIDController(4, 0, 0);
          // encoder = new Encoder(7, 8); //temp holder numbers4 .001
         
         pivotEncoder = new DutyCycleEncoder(1, 1, pivotConstant.kPivotZeroPosition);
