@@ -136,7 +136,6 @@ public class SwerveDriveSubsystem extends SubsystemBase{
 
         poseEstimator = new SwerveDrivePoseEstimator(
             SwerveModuleConstants.kinematics,
-            /*getYawRotation(),*/
             getRotation2dDegContinuous(),
             getModulePosition(),
             new Pose2d()
