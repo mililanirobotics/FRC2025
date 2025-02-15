@@ -152,6 +152,10 @@ public class SwerveModule {
  public double getRotationVelocity() {
   return rotationEncoder.getVelocity();
  }
+ 
+ public double getPower() {
+  return driveMotor.get();
+ }
 
  /**
   * Returns the current reading of the absolute encoder

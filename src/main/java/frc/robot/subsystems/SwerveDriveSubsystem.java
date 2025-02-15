@@ -508,6 +508,7 @@ public class SwerveDriveSubsystem extends SubsystemBase{
     public void periodic() {
         SmartDashboard.putNumber("Roll", getRoll());
         SmartDashboard.putNumber("Pitch", getPitch());
+        SmartDashboard.putNumber("Drive Power", leftFrontModule.getPower());
         SmartDashboard.updateValues();
 
         //updates odometry

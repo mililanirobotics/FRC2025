@@ -43,7 +43,7 @@ public class AlignCenterCommand extends Command {
         //         offset = LimelightConstants.kRightAlignOffset;
         //         break;
         // }
-        offset = Math.toRadians(LimelightConstants.kLeftAlignOffset);
+        offset = Math.toRadians(LimelightConstants.kRightAlignOffset);
     }
 
     @Override
@@ -54,9 +54,9 @@ public class AlignCenterCommand extends Command {
         /*
          * Minimal speed buffer for turning
          */
-        // if (Math.abs(translationalSpeed) < 0.05) {
-        //     translationalSpeed = Math.copySign(0.05, translationalSpeed);
-        // }
+        if (Math.abs(translationalSpeed) < 0.007) {
+            translationalSpeed = Math.copySign(0.007, translationalSpeed);
+        }
 
         ChassisSpeeds targetSpeed = ChassisSpeeds.fromRobotRelativeSpeeds(0, translationalSpeed, 0, Rotation2d.fromDegrees(0));
 
@@ -71,6 +71,6 @@ public class AlignCenterCommand extends Command {
     }
 
     public boolean isFinished() {
-        return Math.abs(offset-currentAngle) <= LimelightConstants.kAlignCenterTolerance;
+        return Math.abs(offset-currentAngle) < LimelightConstants.kAlignCenterTolerance;
     }
 }

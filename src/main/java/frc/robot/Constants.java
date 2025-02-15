@@ -356,17 +356,17 @@ public final class Constants {
 
   public static class LimelightConstants {
     public static final double kLeftAlignOffset = 14.49; //Testing
-    public static final double kRightAlignOffset = 0; //Testing
+    public static final double kRightAlignOffset = -1.55; //Testing
 
     public static enum VisionConstants {
       LEFTCORAL,
       RIGHTCORAL
     }
 
-    public static final double kAlignCenterP = 0.000001;
+    public static final double kAlignCenterP = 0.011;
     public static final double kAlignCenterI = 0;
     public static final double kAlignCenterD = 0;
-    public static final double kAlignCenterTolerance = 0.2; //Temp
+    public static final double kAlignCenterTolerance = 0.01; //Temp
   }
 
   public static class pivotConstant {
@@ -380,6 +380,7 @@ public final class Constants {
 
     public static final double kPivotDownPosition = .228; // Placeholder value, needs to be tested
     public static final double kPivotUpPosition = 0.0015; // Placeholder value, needs to be tested 102849
+    public static final double kElevatedScorePosition = 0.025; //Supposed good value for Scoring while elevated
     public static final double kPivotMiddlePosition = 0; // Placeholder value, needs to be tested 102849
 
     public static final double kPivotTolerance = .0025;
@@ -397,5 +398,12 @@ public final class Constants {
     public static final double IntakePercentOutput = .6;
     public static final double AlgaePercentOutput = 0.25;
     public static final double ScoringPercentOutput = .6;
+  }
+
+  public static class ElevatorConstants {
+
+    public static final double kLevel1Counts = 0; //Needs Testing
+    public static final double kLevel2Counts = 21.7; //Needs Testing
+    public static final double kLevel3Counts = 0; //Needs Testing
   }
 }

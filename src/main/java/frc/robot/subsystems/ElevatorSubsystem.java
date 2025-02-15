@@ -23,9 +23,10 @@ public class ElevatorSubsystem extends SubsystemBase{
     private SparkFlexConfig leftSparkFlexConfig;
     
     private double testSpeed;
+    private double setPoint;
 
     private PIDController pidController;
-    private Encoder encoder;
+
     
     //private ShuffleboardTab tab = Shuffleboard.getTab("SmartDashboard");
     //private GenericEntry rightElevatorSpeed = tab.add("RightElevatorSpeed", 0).getEntry();
@@ -49,6 +50,9 @@ public class ElevatorSubsystem extends SubsystemBase{
         pidController = new PIDController(0, 0, 0);
         // encoder = new Encoder(0, 1);
 
+
+         
+
         testSpeed = 0;
         
     }
@@ -60,6 +64,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
     public void setLeftPower(double power) {
         leftElevatorMotor.set(power);
+        leftElevatorMotor.get();
     }
     public void setRightPower(double power){
         rightElevatorMotor.set(power);
@@ -77,9 +82,32 @@ public class ElevatorSubsystem extends SubsystemBase{
     // }
 
 
+    // public double getOutput() {
+    //     return -pidController.calculate(getShaftEncoder());
+    // }
+
+    // public double getShaftEncoder() {
+    //     return pivotEncoder.get();
+    // }
+
     //Get information
     public double getSpeed() {
         return testSpeed;
+    }
+
+    //PID Methods
+    public double getOutput() {
+        return -pidController.calculate(getElevatorPosition());
+    }
+    public double getSetPoint() {
+        return setPoint;
+    }
+    public double getPIDError() {
+        return pidController.getError();
+    }
+    public void setPoint(double target) {
+        pidController.setSetpoint(target);
+        setPoint = target;
     }
 
     public double getRightSpeed() {
@@ -97,10 +125,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     public double getSetpoint(){
         return pidController.getSetpoint();
     }
-    public double getOutput(){
-        return pidController.calculate(encoder.get());
-    }
-    public double getEnoder(){
+    public double getElevatorPosition(){
         return rightElevatorMotor.getEncoder().getPosition();
     }
 
@@ -128,7 +153,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Right Elevator Motor Speed: ", getRightSpeed());
         SmartDashboard.putNumber("Left Elevator Motor Speed: ", getLeftSpeed());
         SmartDashboard.putNumber("Elevator test speed: ", testSpeed);
-        SmartDashboard.putNumber("Elevator encoder: ", getEnoder());
+        SmartDashboard.putNumber("Elevator encoder: ", getElevatorPosition());
         SmartDashboard.putNumber("Elevator SetPoint", getSetpoint());
         SmartDashboard.updateValues();
     }
