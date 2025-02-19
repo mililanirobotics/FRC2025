@@ -1,4 +1,4 @@
-package frc.robot.Subsystems;
+package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -30,7 +30,6 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
-import frc.robot.Robot;
 //constants
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -79,7 +78,7 @@ public class SwerveDriveSubsystem extends SubsystemBase{
     private double momentOfInertia =  massKG * trackWidth/2 * DriveConstants.kTeleRotationMaxAngularAcceleration/DriveConstants.kTeleDriveMaxAcceleration;
     private DCMotor motor = new DCMotor(12, 3.6, 211, 3.6, 710.418819, 1);
     private ModuleConfig moduleConfig = new ModuleConfig(SwerveModuleConstants.kWheelDiameter/2, DriveConstants.kDriveMaxMetersPerSecond, 1, motor, SwerveModuleConstants.kDriveGearRatio, 25, 1);
-    private RobotConfig config = new RobotConfig(massKG, momentOfInertia, moduleConfig, SwerveModuleConstants.moduleOffsets);
+    private RobotConfig config; //= new RobotConfig(massKG, momentOfInertia, moduleConfig, SwerveModuleConstants.moduleOffsets);
 
     //constructor
     public SwerveDriveSubsystem(ShuffleboardTab testTranPos, ShuffleboardTab testTranVel, ShuffleboardTab testRotPos, 
@@ -145,6 +144,7 @@ public class SwerveDriveSubsystem extends SubsystemBase{
             getRotation2dDegContinuous(),
             getModulePosition(),
             new Pose2d()
+            // new Pose2d(0, 0, new Rotation2d(Math.PI))
         );
 
         //initializing odometry that uses continuous 360 degree input
@@ -183,7 +183,11 @@ public class SwerveDriveSubsystem extends SubsystemBase{
         }
         );
 
-        testPos.add("Field", field).withSize(5, 2);
+        // PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
+
+        SmartDashboard.putData("Field", field);
+
+        // testPos.add("Field", field).withSize(5, 2);
 
         //adding translational position widgets
         leftFrontTranPosWidget = testTranPos.add("left_front_tran_pos", 0).withSize(2, 1).getEntry();
@@ -412,25 +416,33 @@ public class SwerveDriveSubsystem extends SubsystemBase{
         //initializing AutoBuilder to create path planner autopaths
         //flips the created autopath if on the Red Alliance
     
-        AutoBuilder.configure(
-            this::getPose, 
-            this::resetOdometry, 
-            this::getSpeeds, 
-            (speeds) -> driveRobotRelative(speeds),
-            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                AutoConstants.translationConstants, // Translation PID constants
-                AutoConstants.thetaConstants // Rotation PID constants
-            ),
-            config,
-            () -> {
-                var alliance = DriverStation.getAlliance();
-                if(alliance.isPresent()) { 
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            },
-            this
-        );
+        try{
+            config = RobotConfig.fromGUISettings();
+      
+            // Configure AutoBuilder
+            AutoBuilder.configure(
+                this::getPose, 
+                this::resetOdometry, 
+                this::getSpeeds, 
+                (speeds) -> driveRobotRelative(speeds),
+                new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                    AutoConstants.translationConstants, // Translation PID constants
+                    AutoConstants.thetaConstants // Rotation PID constants
+                ),
+                config,
+                () -> {
+                    var alliance = DriverStation.getAlliance();
+                    if(alliance.isPresent()) { 
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this
+            );
+          }catch(Exception e){
+            DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
+          }
+        
     }
 
     /**

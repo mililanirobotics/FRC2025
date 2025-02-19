@@ -63,10 +63,10 @@ public class Constants {
     public static final int kRightFrontCANCoderPort = 2;
     public static final int kLeftBackCANCoderPort = 11;
     public static final int kRightBackCANCoderPort = 17;
-    public static final double kLeftFrontCANCoderOffset = 0.273193359375;
-    public static final double kRightFrontCANCoderOffset = 0.421142578125;
-    public static final double kLeftBackCANCoderOffset = -0.009765625;
-    public static final double kRightBackCANCoderOffset = 0.4853515625;
+    public static final double kLeftFrontCANCoderOffset = 0.273193359375 + 0.5;
+    public static final double kRightFrontCANCoderOffset = 0.421142578125 + 0.5;
+    public static final double kLeftBackCANCoderOffset = -0.009765625 + 0.5;
+    public static final double kRightBackCANCoderOffset = 0.4853515625 + 0.5;
 
     public static final int kLeftBackIndex = 2;
     public static final int kRightBackIndex = 3;
@@ -265,17 +265,17 @@ public class Constants {
 
   public static class AutoConstants {
     //auto constraints 
-    public static final double kAutoDriveMaxMetersPerSecond = 3;
+    public static final double kAutoDriveMaxMetersPerSecond = .5;
     public static final double kAutoDriveMaxAcceleration = kAutoDriveMaxMetersPerSecond * 8;
     public static final double kAutoDriveMaxRadiansPerSecond = 1;
     public static final double kAutoDriveMaxAngularAcceleration = kAutoDriveMaxRadiansPerSecond * 8;
 
     //WPLIB constants
-    public static final double kPXController = 1.5;
+    public static final double kPXController = 0;
     public static final double kIXController = 0;
     public static final double kDXController = 0;
 
-    public static final double kPYController = 1.5;
+    public static final double kPYController = 0;
     public static final double kIYController = 0;
     public static final double kDYController = 0;
 
@@ -285,13 +285,14 @@ public class Constants {
 
 
     //PID Constants
-    public static final double kPController = 16;
-    public static final double kIController = 0;
-    public static final double kDController = 0;
+    public static final double kPController = 1.2;
+    public static final double kIController = .0;
+    public static final double kDController = 0.005;
 
-    public static final double kPThetaControllerP = 0.08;
+
+    public static final double kPThetaControllerP = .2;
     public static final double kIThetaControllerP = 0.0; 
-    public static final double kDThetaControllerP = 0.001;
+    public static final double kDThetaControllerP = 0.0;
 
     public static final PIDConstants translationConstants = new PIDConstants(
       kPController, 

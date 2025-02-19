@@ -1,4 +1,4 @@
-package frc.robot.Subsystems;
+package frc.robot;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
