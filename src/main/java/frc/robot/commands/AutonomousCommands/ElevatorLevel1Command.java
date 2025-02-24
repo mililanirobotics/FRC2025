@@ -2,6 +2,7 @@ package frc.robot.commands.AutonomousCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class ElevatorLevel1Command extends Command {
@@ -16,6 +17,8 @@ public class ElevatorLevel1Command extends Command {
 
     @Override
     public void initialize(){
+        m_elevatorSubsystem.setPoint(ElevatorConstants.kLevel1Counts);
+
     }
 
     @Override
@@ -28,6 +31,6 @@ public class ElevatorLevel1Command extends Command {
     }
     @Override
     public boolean isFinished(){
-        return m_elevatorSubsystem.getCurrentError() == 0;
+        return m_elevatorSubsystem.getCurrentError() <= 0.5;
     }
 }

@@ -14,7 +14,7 @@ public class AutoOuttakeCommand extends Command {
     }
     @Override
     public void initialize(){
-        m_intakeSubsystem.setRollerPower(0.6);
+        m_intakeSubsystem.setRollerPower(0.6,1);
     }
    
     @Override
@@ -24,6 +24,7 @@ public class AutoOuttakeCommand extends Command {
 
     @Override
     public boolean isFinished(){
-        return m_intakeSubsystem.getRollerSensor() && m_intakeSubsystem.getLeftPathSensor() && m_intakeSubsystem.getRightPathSensor();
+        // return m_intakeSubsystem.getRollerSensor() && m_intakeSubsystem.getLeftPathSensor() && m_intakeSubsystem.getRightPathSensor();
+        return true;
     }
 }

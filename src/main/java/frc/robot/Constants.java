@@ -337,9 +337,7 @@ public final class Constants {
     public final static int kRightElevatorPort = 15;
     public final static int kLeftElevatorPort = 14;
 
-    public final static int kRollerSensorPort = 13;
-    public final static int kLeftPathSensor = 12;
-    public final static int kRightPathSensor = 11;
+    public final static int kIntakeSensorPort = 8;
 
     public final static int kRollerTopPort = 35;
     public final static int kRollerBottomPort = 17;
@@ -381,7 +379,10 @@ public final class Constants {
     public static final double kPivotDownPosition = .228; // Placeholder value, needs to be tested
     public static final double kPivotUpPosition = 0.0015; // Placeholder value, needs to be tested 102849
     public static final double kElevatedScorePosition = 0.025; //Supposed good value for Scoring while elevated
-    public static final double kPivotMiddlePosition = 0; // Placeholder value, needs to be tested 102849
+    public static final double kPivotMiddlePosition = 0.015; // Placeholder value, needs to be tested 102849
+    public static final double kPivotAlgaePosition = 0.12;
+
+    public static final double kPivotSensorPosition = 0.01; //placeholder :(
 
     public static final double kPivotTolerance = .0025;
 
@@ -402,8 +403,18 @@ public final class Constants {
 
   public static class ElevatorConstants {
 
+    public static final double kGroundCounts = 0;
     public static final double kLevel1Counts = 0; //Needs Testing
-    public static final double kLevel2Counts = 21.7; //Needs Testing
-    public static final double kLevel3Counts = 0; //Needs Testing
+    public static final double kLevel2Counts = 20; //Needs Testing
+    public static final double kLevel3Counts = 97; //Needs Testing
+
+    public static enum ElevatorPositions {
+      GROUND,
+      LEVEL1,
+      ALGAE1,
+      LEVEL2,
+      ALGAE2,
+      LEVEL3
+    }
   }
 }

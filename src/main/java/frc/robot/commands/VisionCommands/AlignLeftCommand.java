@@ -4,14 +4,16 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.GamepadConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.LimelightConstants.VisionConstants;
 import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class AlignCenterCommand extends Command {
+public class AlignLeftCommand extends Command {
     private SwerveDriveSubsystem m_SwerveDriveSubsystem;
     private LimelightSubsystem m_LimelightSubsystem;
     //private VisionConstants m_VisionState;
@@ -21,7 +23,9 @@ public class AlignCenterCommand extends Command {
     private double currentAngle;
     private double translationalSpeed;
 
-    public AlignCenterCommand(SwerveDriveSubsystem swerveDriveSubsystem, LimelightSubsystem limelightSubsystem) {
+    private GenericHID controller;
+
+    public AlignLeftCommand(SwerveDriveSubsystem swerveDriveSubsystem, LimelightSubsystem limelightSubsystem) {
         m_SwerveDriveSubsystem = swerveDriveSubsystem;
         m_LimelightSubsystem = limelightSubsystem;
         //m_VisionState = visionConstants;
@@ -43,7 +47,7 @@ public class AlignCenterCommand extends Command {
         //         offset = LimelightConstants.kRightAlignOffset;
         //         break;
         // }
-        offset = Math.toRadians(LimelightConstants.kRightAlignOffset);
+        offset = Math.toRadians(LimelightConstants.kLeftAlignOffset);
     }
 
     @Override
@@ -71,6 +75,6 @@ public class AlignCenterCommand extends Command {
     }
 
     public boolean isFinished() {
-        return Math.abs(offset-currentAngle) < LimelightConstants.kAlignCenterTolerance;
+        return Math.abs(offset-currentAngle) < LimelightConstants.kAlignCenterTolerance || controller.getRawButton(GamepadConstants.kLeftTriggerPort);
     }
 }
