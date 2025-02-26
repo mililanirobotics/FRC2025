@@ -11,7 +11,7 @@ import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class AlignCenterCommand extends Command {
+public class AlignLeftCommand extends Command {
     private SwerveDriveSubsystem m_SwerveDriveSubsystem;
     private LimelightSubsystem m_LimelightSubsystem;
     //private VisionConstants m_VisionState;
@@ -21,7 +21,7 @@ public class AlignCenterCommand extends Command {
     private double currentAngle;
     private double translationalSpeed;
 
-    public AlignCenterCommand(SwerveDriveSubsystem swerveDriveSubsystem, LimelightSubsystem limelightSubsystem) {
+    public AlignLeftCommand(SwerveDriveSubsystem swerveDriveSubsystem, LimelightSubsystem limelightSubsystem) {
         m_SwerveDriveSubsystem = swerveDriveSubsystem;
         m_LimelightSubsystem = limelightSubsystem;
         //m_VisionState = visionConstants;
@@ -43,7 +43,7 @@ public class AlignCenterCommand extends Command {
         //         offset = LimelightConstants.kRightAlignOffset;
         //         break;
         // }
-        offset = Math.toRadians(LimelightConstants.kRightAlignOffset);
+        offset = Math.toRadians(LimelightConstants.kLeftAlignOffset);
     }
 
     @Override
@@ -71,6 +71,6 @@ public class AlignCenterCommand extends Command {
     }
 
     public boolean isFinished() {
-        return Math.abs(offset-currentAngle) < LimelightConstants.kAlignCenterTolerance;
+        return !m_LimelightSubsystem.isTargetFound() || (Math.abs(offset-currentAngle) < LimelightConstants.kAlignCenterTolerance);
     }
 }

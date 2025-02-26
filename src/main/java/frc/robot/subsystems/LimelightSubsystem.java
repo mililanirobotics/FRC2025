@@ -34,6 +34,13 @@ public class LimelightSubsystem extends SubsystemBase {
         return table.getEntry("tv").getDouble(0) == 0f;
     }
 
+    public boolean isReefTargetFound() {
+        return false;
+    }
+
+    public String getTagID() {
+        return table.getEntry("tid").getString("0");
+    }
     /**
      * Returns the horizontal offset from the crosshair to the target
      * @return the horizontal offset from crosshair to the target (-29.8 to +29.8 degrees)

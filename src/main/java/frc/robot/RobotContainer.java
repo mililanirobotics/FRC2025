@@ -16,6 +16,7 @@ import frc.robot.commands.AutonomousCommands.ElevatorGroundCommand;
 import frc.robot.commands.ManualCommands.EjectCommand;
 import frc.robot.commands.ManualCommands.ElevatorDownCommand;
 import frc.robot.commands.ManualCommands.ElevatorUpCommand;
+import frc.robot.commands.ManualCommands.HangControlCommand;
 import frc.robot.commands.ManualCommands.IntakeCommand;
 import frc.robot.commands.ManualCommands.IntakeShutdownCommand;
 import frc.robot.commands.ManualCommands.PivotBackwardCommand;
@@ -38,10 +39,12 @@ import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerDownSpeedC
 import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerSetPowerCommand;
 import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerShutdownCommand;
 import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerUpSpeedCommand;
-import frc.robot.commands.VisionCommands.AlignCenterCommand;
+import frc.robot.commands.VisionCommands.AlignRightCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.HangSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -51,6 +54,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -81,6 +85,8 @@ public class RobotContainer {
   private final GenericHID controller2 = new GenericHID(1);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
   private final LimelightSubsystem m_LimelightSubsystem = new LimelightSubsystem();
+  private final HangSubsystem m_HangSubsystem = new HangSubsystem();
+  private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem(controller1);
   private final PIDController m_PidController = new PIDController(0.000001, 0, 0);
 
   private final CommandXboxController m_driverController =
@@ -95,6 +101,12 @@ public class RobotContainer {
     m_SwerveDriveSubsystem.setDefaultCommand(new SwerveControlCommand(
       m_SwerveDriveSubsystem, 
       controller1
+      )
+    );
+
+    m_HangSubsystem.setDefaultCommand(new HangControlCommand(
+      m_HangSubsystem, 
+      controller2
       )
     );
   }
@@ -204,7 +216,22 @@ public class RobotContainer {
 
     //Vison offset buttons
     new POVButton(controller1, GamepadConstants.kDpadLeft)
-      .onTrue(new AlignCenterCommand(m_SwerveDriveSubsystem, m_LimelightSubsystem));
+      .onTrue(new AlignRightCommand(m_SwerveDriveSubsystem, m_LimelightSubsystem));
+
+
+    // new JoystickButton(controller1, 10)
+    //   .onTrue(new InstantCommand(
+    //     () -> {
+    //       m_SwerveDriveSubsystem.setDesiredHeading(0);
+    //       m_SwerveDriveSubsystem.setHeadingLimiter(true);
+    //     }
+    //   ))
+    //   .onFalse(new InstantCommand(
+    //     () -> {
+    //       m_SwerveDriveSubsystem.setHeadingLimiter(false);
+    //     }
+    //   ));
+
 
   }
   

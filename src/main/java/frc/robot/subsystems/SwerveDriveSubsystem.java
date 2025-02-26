@@ -75,6 +75,11 @@ public class SwerveDriveSubsystem extends SubsystemBase{
 
     //Pathplanner confis
     private RobotConfig config;
+
+    //Swerve Alignment variables
+    private double desiredHeading;
+    private boolean headingLimiter;
+    private boolean isReversed = false;
     
     //constructor
     public SwerveDriveSubsystem(ShuffleboardTab testTranPos, ShuffleboardTab testTranVel, ShuffleboardTab testRotPos, 
@@ -216,6 +221,34 @@ public class SwerveDriveSubsystem extends SubsystemBase{
     }
 
     //=========================================================================== 
+    // angle alignmet methods
+    //===========================================================================
+
+    public void setDesiredHeading(double heading) {
+        desiredHeading = heading;
+    }
+
+    public void setHeadingLimiter(boolean limited) {
+        headingLimiter = limited;
+    }
+
+    public void setRevered(boolean reversed) {
+        isReversed = reversed;
+    }
+
+    public double getDesiredHeading() {
+        return desiredHeading;
+    }
+
+    public boolean isHeadingLimited() {
+        return headingLimiter;
+    }
+
+    public boolean isReversed() {
+        return isReversed;
+    }
+    
+    //=========================================================================== 
     // gyro and accelorometer methods
     //===========================================================================
 
@@ -313,7 +346,11 @@ public class SwerveDriveSubsystem extends SubsystemBase{
     public double getDegrees() {
         double rawDegrees = getYawReverse();//-180
         // rawDegrees = rawDegrees % 360;
-        return rawDegrees < 0 ? rawDegrees + 360 : rawDegrees;
+        rawDegrees = rawDegrees < 0 ? rawDegrees + 360 : rawDegrees;
+        if (isReversed) {
+            return rawDegrees - 180;
+        }
+        return rawDegrees;
         // return 0;
     }
 

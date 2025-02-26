@@ -346,6 +346,9 @@ public final class Constants {
 
     public final static int kPivotPort = 18;
     public final static int kPivotEncoderPort = 1;
+
+    public final static int kLeftLinearActuatorPort = 5;
+    public final static int kRightLinearActuatorPort = 6;
   }
   
   // public static class PIDConstants {
@@ -406,4 +409,9 @@ public final class Constants {
     public static final double kLevel2Counts = 21.7; //Needs Testing
     public static final double kLevel3Counts = 0; //Needs Testing
   }
+ 
+  public static class LEDConstants {
+    public static final int CANdleID = 7;
+    public static final int LEDcount = 74; //69
+}
 }

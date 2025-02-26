@@ -5,6 +5,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -23,6 +24,8 @@ public class SwerveControlCommand extends Command{
     private SlewRateLimiter xLimiter, yLimiter, turningLimiter;
     
     private GenericHID gamepad;
+    
+    private PIDController pid;
 
     public SwerveControlCommand(SwerveDriveSubsystem swerveDriveSubsystem, GenericHID gamepad) {
         m_SwerveDriveSubsystem = swerveDriveSubsystem;
@@ -31,6 +34,8 @@ public class SwerveControlCommand extends Command{
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAcceleration);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAcceleration);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleRotationMaxAngularAcceleration);
+
+        pid = new PIDController(0.001, 0, 0);
 
         addRequirements(m_SwerveDriveSubsystem);
     }
@@ -52,7 +57,15 @@ public class SwerveControlCommand extends Command{
         // Apply Deadband to prevent motors accidentally spinning
         xSpeed = Math.abs(xSpeed) > GamepadConstants.kDeadzone ? xSpeed : 0.0;
         ySpeed = Math.abs(ySpeed) > GamepadConstants.kDeadzone ? ySpeed : 0.0; 
-        turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
+
+        if (m_SwerveDriveSubsystem.isHeadingLimited()) {
+            pid.setSetpoint(m_SwerveDriveSubsystem.getDesiredHeading());
+            pid.setTolerance(1);
+            turningSpeed = pid.calculate(m_SwerveDriveSubsystem.getDegrees());
+        }
+        else {
+            turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
+        }
 
         //Limiting Drive Speeds Acceleration to be linear
         xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kDriveMetersPerSecondLimit;
