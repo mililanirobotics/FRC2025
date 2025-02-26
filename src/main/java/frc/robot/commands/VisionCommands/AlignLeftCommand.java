@@ -4,7 +4,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.GamepadConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.LimelightConstants.VisionConstants;
 import frc.robot.Constants.SwerveModuleConstants;
@@ -20,6 +22,8 @@ public class AlignLeftCommand extends Command {
 
     private double currentAngle;
     private double translationalSpeed;
+
+    private GenericHID controller;
 
     public AlignLeftCommand(SwerveDriveSubsystem swerveDriveSubsystem, LimelightSubsystem limelightSubsystem) {
         m_SwerveDriveSubsystem = swerveDriveSubsystem;
@@ -71,6 +75,6 @@ public class AlignLeftCommand extends Command {
     }
 
     public boolean isFinished() {
-        return !m_LimelightSubsystem.isTargetFound() || (Math.abs(offset-currentAngle) < LimelightConstants.kAlignCenterTolerance);
+        return Math.abs(offset-currentAngle) < LimelightConstants.kAlignCenterTolerance || controller.getRawButton(GamepadConstants.kLeftTriggerPort);
     }
 }

@@ -13,6 +13,7 @@ public class EjectCommand extends Command {
     private GenericHID controller;
 
     private double percentOutput;
+    private double scoringMultiplier;
 
     public EjectCommand(IntakeSubsystem m_IntakeSubsystem, PivotPositions pivotState, GenericHID controller){
         this.m_intakeSubsystem = m_IntakeSubsystem;
@@ -20,6 +21,7 @@ public class EjectCommand extends Command {
         this.controller = controller;
 
         addRequirements(m_IntakeSubsystem);
+        scoringMultiplier = 1;
     }
 
     @Override
@@ -33,6 +35,7 @@ public class EjectCommand extends Command {
                 break;
             case STARTCONFIG:
                 percentOutput = -IntakeConstants.ScoringPercentOutput;
+                scoringMultiplier = 0.85;
                 break;
             case ALGAE:
                 percentOutput = -IntakeConstants.AlgaePercentOutput;   
@@ -42,7 +45,7 @@ public class EjectCommand extends Command {
 
     @Override
     public void execute(){
-        m_intakeSubsystem.setRollerPower(percentOutput);
+        m_intakeSubsystem.setRollerPower(percentOutput, scoringMultiplier);
     }
 
     @Override

@@ -15,9 +15,7 @@ import frc.robot.Constants.PortConstants;
 public class IntakeSubsystem extends SubsystemBase {
     private SparkMax rollerTop;
     private SparkMax rollerBottom;
-    private DigitalInput rollerSensor;
-    private DigitalInput rightPathSensor;
-    private DigitalInput leftPathSensor;
+    private DigitalInput IntakeSensor;
     private SparkMaxConfig topMotorConfig;
     double topTestSpeed = 0;
     double bottomTestSpeed = 0;
@@ -25,10 +23,8 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem () {
         rollerTop = new SparkMax(PortConstants.kRollerTopPort, MotorType.kBrushless);
         rollerBottom = new SparkMax(PortConstants.kRollerBottomPort, MotorType.kBrushless);
-        
-        rollerSensor = new DigitalInput(PortConstants.kRollerSensorPort);
-        rightPathSensor = new DigitalInput(PortConstants.kRightPathSensor);
-        leftPathSensor = new DigitalInput(PortConstants.kLeftPathSensor);
+
+        IntakeSensor = new DigitalInput(PortConstants.kIntakeSensorPort);
 
         topMotorConfig = new SparkMaxConfig();
         topMotorConfig
@@ -37,9 +33,9 @@ public class IntakeSubsystem extends SubsystemBase {
         rollerTop.configure(topMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
     }
-    public void setRollerPower (double power) {
+    public void setRollerPower (double power, double multiplier) {
         rollerTop.set(power);
-        rollerBottom.set(power);
+        rollerBottom.set(power*multiplier);
     }
     public void setRollerTopPower (double power) {
         rollerTop.set(power);
@@ -47,14 +43,8 @@ public class IntakeSubsystem extends SubsystemBase {
     public void setRollerBottomPower (double power) {
         rollerBottom.set(power);
     }
-    public boolean getRollerSensor(){
-        return rollerSensor.get();
-    }
-    public boolean getLeftPathSensor(){
-        return leftPathSensor.get();
-    }
-    public boolean getRightPathSensor(){
-        return rightPathSensor.get();
+    public boolean getIntakeSensor(){
+        return !IntakeSensor.get();
     }
     public double getBottomSpeed(){
         return rollerBottom.get();
@@ -100,10 +90,7 @@ public class IntakeSubsystem extends SubsystemBase {
     } 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("Roller Sensor: ", getRollerSensor());
-        SmartDashboard.putBoolean("Left Path Sensor: ", getLeftPathSensor());
-        SmartDashboard.putBoolean("Right Path Sensor:", getRightPathSensor());
-
+        SmartDashboard.putBoolean("IntakeSensor: ", getIntakeSensor());
         SmartDashboard.putNumber("Bottom Roller Speed", getBottomSpeed());
         SmartDashboard.putNumber("Top Roller Speed", getTopSpeed());
         SmartDashboard.putNumber("Top Roller Test Speed", getTopTestSpeed());

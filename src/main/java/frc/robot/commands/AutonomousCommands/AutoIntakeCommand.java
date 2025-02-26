@@ -18,7 +18,7 @@ public class AutoIntakeCommand extends Command{
     }
     @Override
     public void execute(){
-    m_intakeSubsystem.setRollerPower(0.6);
+    m_intakeSubsystem.setRollerPower(0.6, 1);
     }
     @Override
     public void end(boolean interupted){
@@ -26,6 +26,6 @@ public class AutoIntakeCommand extends Command{
     }
     @Override
     public boolean isFinished(){
-    return !m_intakeSubsystem.getLeftPathSensor() || !m_intakeSubsystem.getRightPathSensor() || m_controller.getRawButton(GamepadConstants.kBButtonPort);
+        return m_intakeSubsystem.getIntakeSensor();
     }
 }

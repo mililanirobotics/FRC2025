@@ -1,4 +1,4 @@
-package frc.robot.commands.ManualCommands;
+package frc.robot.commands.AutonomousCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,7 +10,7 @@ import frc.robot.subsystems.PivotSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.pivotConstant;
 
-public class IntakeCommand extends Command {
+public class AutoIntakePivotSensorCommand extends Command {
     private IntakeSubsystem m_intakeSubsystem;
     private PivotPositions pivotState;
     private GenericHID controller;
@@ -19,7 +19,7 @@ public class IntakeCommand extends Command {
 
     private double percentOutput;
 
-    public IntakeCommand(IntakeSubsystem m_IntakeSubsystem, PivotPositions pivotState, GenericHID controller, PivotSubsystem m_pivotSubsystem){
+    public AutoIntakePivotSensorCommand(IntakeSubsystem m_IntakeSubsystem, PivotPositions pivotState, GenericHID controller, PivotSubsystem m_pivotSubsystem){
         this.m_intakeSubsystem = m_IntakeSubsystem;
         this.m_pivotSubsystem = m_pivotSubsystem;
 
@@ -47,28 +47,31 @@ public class IntakeCommand extends Command {
                 percentOutput = IntakeConstants.AlgaePercentOutput;
                 break;
         }
-        // m_pivotSubsystem.setPoint(pivotConstant.?????);
-        // m_pivotSubsystem.setCurrentState(PivotPositions.ALGAE);
+        m_pivotSubsystem.setPoint(pivotConstant.kPivotAlgaePosition);
+        m_pivotSubsystem.setCurrentState(PivotPositions.ALGAE);
     }
 
     @Override
     public void execute(){
-        // if(!m_intakeSubsystem.getIntakeSensor() && Timer.getTimestamp() > initialTime + 0.1){
-        // m_intakeSubsystem.setRollerPower(percentOutput, 1);
-        // }
-        // else if(m_intakeSubsystem.getIntakeSensor() && Math.abs(m_pivotSubsystem.getPIDError()) > pivotConstant.kPivotTolerance){
-        // m_intakeSubsystem.setRollerPower(0.3, 1);
-        // m_pivotSubsystem.setPivotPower(m_pivotSubsystem.getOutput());
-        // }
-        // else if(m_intakeSubsystem.getIntakeSensor() )
+        if(!m_intakeSubsystem.getIntakeSensor()){
         m_intakeSubsystem.setRollerPower(percentOutput, 1);
+        }
+        else if(m_intakeSubsystem.getIntakeSensor() && Math.abs(m_pivotSubsystem.getPIDError()) > pivotConstant.kPivotTolerance && Timer.getTimestamp() > initialTime + 0.2){
+        m_intakeSubsystem.setRollerPower(0.3, 1);
+        m_pivotSubsystem.setPivotPower(m_pivotSubsystem.getOutput());
+        }
+        else if(m_intakeSubsystem.getIntakeSensor() && Math.abs(m_pivotSubsystem.getPIDError()) <= pivotConstant.kPivotTolerance){
+            m_intakeSubsystem.setRollerPower(0.4, 1);
+            m_pivotSubsystem.setPivotPower(0);
+        }
+      
 
     }
 
     @Override
     public void end(boolean interupted){
         m_intakeSubsystem.shutdown();
-        // m_pivotSubsystem.shutdown();
+        m_pivotSubsystem.shutdown();
     }
 
     @Override

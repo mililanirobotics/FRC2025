@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PortConstants;
+import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 
 
 
@@ -26,7 +27,9 @@ public class ElevatorSubsystem extends SubsystemBase{
     private double setPoint;
 
     private PIDController pidController;
+    
 
+    private ElevatorPositions currentState;
     
     //private ShuffleboardTab tab = Shuffleboard.getTab("SmartDashboard");
     //private GenericEntry rightElevatorSpeed = tab.add("RightElevatorSpeed", 0).getEntry();
@@ -47,12 +50,8 @@ public class ElevatorSubsystem extends SubsystemBase{
             .inverted(true)
             .idleMode(IdleMode.kBrake);
        leftElevatorMotor.configure(leftSparkFlexConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        pidController = new PIDController(0, 0, 0);
-        // encoder = new Encoder(0, 1);
-
-
-         
-
+        pidController = new PIDController(0.03, 0.01, 0);
+        pidController.setIntegratorRange(-0.05, 0.045);
         testSpeed = 0;
         
     }
@@ -97,7 +96,7 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     //PID Methods
     public double getOutput() {
-        return -pidController.calculate(getElevatorPosition());
+        return pidController.calculate(getElevatorPosition());
     }
     public double getSetPoint() {
         return setPoint;
@@ -109,6 +108,12 @@ public class ElevatorSubsystem extends SubsystemBase{
         pidController.setSetpoint(target);
         setPoint = target;
     }
+
+    /*
+     * Methods for using enum Elevator States
+     */
+
+
 
     public double getRightSpeed() {
         return rightElevatorMotor.get();
