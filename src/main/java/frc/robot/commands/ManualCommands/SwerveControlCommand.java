@@ -57,15 +57,16 @@ public class SwerveControlCommand extends Command{
         // Apply Deadband to prevent motors accidentally spinning
         xSpeed = Math.abs(xSpeed) > GamepadConstants.kDeadzone ? xSpeed : 0.0;
         ySpeed = Math.abs(ySpeed) > GamepadConstants.kDeadzone ? ySpeed : 0.0; 
+        turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
 
-        if (m_SwerveDriveSubsystem.isHeadingLimited()) {
-            pid.setSetpoint(m_SwerveDriveSubsystem.getDesiredHeading());
-            pid.setTolerance(1);
-            turningSpeed = pid.calculate(m_SwerveDriveSubsystem.getDegrees());
-        }
-        else {
-            turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
-        }
+        // if (m_SwerveDriveSubsystem.isHeadingLimited()) {
+        //     pid.setSetpoint(m_SwerveDriveSubsystem.getDesiredHeading());
+        //     pid.setTolerance(1);
+        //     turningSpeed = pid.calculate(m_SwerveDriveSubsystem.getDegrees());
+        // }
+        // else {
+        //     turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
+        // }
 
         //Limiting Drive Speeds Acceleration to be linear
         xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kDriveMetersPerSecondLimit;

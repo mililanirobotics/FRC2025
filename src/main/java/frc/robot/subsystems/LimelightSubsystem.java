@@ -38,8 +38,8 @@ public class LimelightSubsystem extends SubsystemBase {
         return false;
     }
 
-    public String getTagID() {
-        return table.getEntry("tid").getString("0");
+    public double getTagID() {
+        return table.getEntry("tid").getDouble(0);
     }
     /**
      * Returns the horizontal offset from the crosshair to the target
