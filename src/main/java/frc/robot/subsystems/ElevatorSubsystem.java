@@ -157,7 +157,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     public void periodic() {
         SmartDashboard.putNumber("Right Elevator Motor Speed: ", getRightSpeed());
         SmartDashboard.putNumber("Left Elevator Motor Speed: ", getLeftSpeed());
-        SmartDashboard.putNumber("Elevator test speed: ", testSpeed);
+        SmartDashboard.putNumber("Elevator test speed: ", getOutput());
         SmartDashboard.putNumber("Elevator encoder: ", getElevatorPosition());
         SmartDashboard.putNumber("Elevator SetPoint", getSetpoint());
         SmartDashboard.updateValues();

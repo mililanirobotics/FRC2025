@@ -40,7 +40,7 @@ public class AutoIntakePivotSensorCommand extends Command {
             case INTAKE:
                 percentOutput = IntakeConstants.IntakePercentOutput;
                 break;
-            case STARTCONFIG:
+            case SCORING:
                 percentOutput = IntakeConstants.IntakePercentOutput;
                 break;
             case ALGAE:
@@ -53,14 +53,14 @@ public class AutoIntakePivotSensorCommand extends Command {
 
     @Override
     public void execute(){
-        if(!m_intakeSubsystem.getIntakeSensor()){
+        if(!m_intakeSubsystem.isCoralIn()){
         m_intakeSubsystem.setRollerPower(percentOutput, 1);
         }
-        else if(m_intakeSubsystem.getIntakeSensor() && Math.abs(m_pivotSubsystem.getPIDError()) > pivotConstant.kPivotTolerance && Timer.getTimestamp() > initialTime + 0.2){
+        else if(m_intakeSubsystem.isCoralIn() && Math.abs(m_pivotSubsystem.getPIDError()) > pivotConstant.kPivotTolerance && Timer.getTimestamp() > initialTime + 0.2){
         m_intakeSubsystem.setRollerPower(0.3, 1);
         m_pivotSubsystem.setPivotPower(m_pivotSubsystem.getOutput());
         }
-        else if(m_intakeSubsystem.getIntakeSensor() && Math.abs(m_pivotSubsystem.getPIDError()) <= pivotConstant.kPivotTolerance){
+        else if(m_intakeSubsystem.isCoralIn() && Math.abs(m_pivotSubsystem.getPIDError()) <= pivotConstant.kPivotTolerance){
             m_intakeSubsystem.setRollerPower(0.4, 1);
             m_pivotSubsystem.setPivotPower(0);
         }

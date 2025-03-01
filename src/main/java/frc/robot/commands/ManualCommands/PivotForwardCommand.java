@@ -17,12 +17,7 @@ public class PivotForwardCommand extends Command{
     }
     @Override
     public void initialize(){
-        m_PivotSubsystem.setPoint(pivotConstant.kPivotDownPosition);
-    }
-    @Override
-    public void execute(){
-        m_PivotSubsystem.setPivotPower(0.1);
-        
+        m_PivotSubsystem.setPivotPower(0.001);
     }
     @Override
     public void end(boolean interupted){
@@ -30,6 +25,6 @@ public class PivotForwardCommand extends Command{
     }
     @Override
     public boolean isFinished(){
-        return !m_controller.getRawButton(GamepadConstants.kDpadUp);
+        return !m_controller.getRawButton(GamepadConstants.kBButtonPort) || m_controller.getRawButton(GamepadConstants.kRightBumperPort);
     }
 }

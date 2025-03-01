@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,8 +24,12 @@ public class LimelightSubsystem extends SubsystemBase {
         private int PipelineID;
     }
 
+    HttpCamera httpCamera;
+
     public LimelightSubsystem() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
+        httpCamera = new HttpCamera("limelight", "http://frcvision.local:1181/stream.mjpg");
+        CameraServer.addCamera(httpCamera);
     }
 
     /**

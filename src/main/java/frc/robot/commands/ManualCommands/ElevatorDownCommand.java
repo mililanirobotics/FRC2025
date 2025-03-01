@@ -21,10 +21,7 @@ public class ElevatorDownCommand extends Command{
 
     @Override
     public void initialize(){
-    }
-    @Override
-    public void execute(){
-       m_elevatorSubsystem.setPower(-0.3);
+        m_elevatorSubsystem.setPower(-0.003);
     }
     @Override
     public void end(boolean interupted){
@@ -32,6 +29,6 @@ public class ElevatorDownCommand extends Command{
     }
     @Override
     public boolean isFinished(){
-        return controller.getRawButton(GamepadConstants.kLeftBumperPort);
+        return !controller.getRawButton(GamepadConstants.kYButtonPort) || !controller.getRawButton(GamepadConstants.kRightBumperPort);
     }
 }

@@ -14,8 +14,8 @@ public class AutoPivotUpCommand extends Command{
     }
     @Override
     public void initialize(){
-        m_PivotSubsystem.setPoint(pivotConstant.kPivotUpPosition);
-        m_PivotSubsystem.setCurrentState(PivotPositions.STARTCONFIG);
+        m_PivotSubsystem.setPoint(pivotConstant.kElevatedScorePosition);
+        m_PivotSubsystem.setCurrentState(PivotPositions.SCORING);
     }
     @Override
     public void execute(){

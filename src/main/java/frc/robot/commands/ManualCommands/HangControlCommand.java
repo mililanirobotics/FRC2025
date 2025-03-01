@@ -2,6 +2,7 @@ package frc.robot.commands.ManualCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.GamepadConstants;
 import frc.robot.subsystems.HangSubsystem;
 
 public class HangControlCommand extends Command {
@@ -17,7 +18,15 @@ public class HangControlCommand extends Command {
 
     @Override
     public void execute() {
-        m_HangSubsystem.setPower(gamepad.getRawAxis(1));
+        if (gamepad.getRawButton(GamepadConstants.kBackButtonPort)) {
+            m_HangSubsystem.setPower(-1);
+        }
+        else if (gamepad.getRawButton(GamepadConstants.kStartButtonPort)) {
+            m_HangSubsystem.setPower(1);
+        }
+        else {
+            m_HangSubsystem.setPower(0);
+        }
     }
 
     @Override

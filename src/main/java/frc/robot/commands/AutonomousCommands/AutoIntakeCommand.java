@@ -26,6 +26,6 @@ public class AutoIntakeCommand extends Command{
     }
     @Override
     public boolean isFinished(){
-        return m_intakeSubsystem.getIntakeSensor();
+        return m_intakeSubsystem.isCoralIn();
     }
 }

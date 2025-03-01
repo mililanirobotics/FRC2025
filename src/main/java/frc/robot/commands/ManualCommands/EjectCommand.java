@@ -33,7 +33,7 @@ public class EjectCommand extends Command {
             case INTAKE:
                 percentOutput = -IntakeConstants.IntakePercentOutput;
                 break;
-            case STARTCONFIG:
+            case SCORING:
                 percentOutput = -IntakeConstants.ScoringPercentOutput;
                 scoringMultiplier = 0.85;
                 break;
@@ -55,6 +55,6 @@ public class EjectCommand extends Command {
 
     @Override
     public boolean isFinished(){
-        return !controller.getRawButton(GamepadConstants.kAButtonPort);
+        return !controller.getRawButton(GamepadConstants.kAButtonPort) || !controller.getRawButton(GamepadConstants.kRightBumperPort);
     }
 }

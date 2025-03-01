@@ -10,20 +10,17 @@ import frc.robot.subsystems.PivotSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.pivotConstant;
 
-public class IntakeCommand extends Command {
+public class IntakeControlCommand extends Command {
     private IntakeSubsystem m_intakeSubsystem;
-    private PivotPositions pivotState;
+    private PivotSubsystem m_PivotSubsystem;
     private GenericHID controller;
-    private PivotSubsystem m_pivotSubsystem;
-    private double initialTime;
 
     private double percentOutput;
 
-    public IntakeCommand(IntakeSubsystem m_IntakeSubsystem, PivotPositions pivotState, GenericHID controller, PivotSubsystem m_pivotSubsystem){
+    public IntakeControlCommand(IntakeSubsystem m_IntakeSubsystem, PivotSubsystem m_PivotSubsystem, GenericHID controller){
         this.m_intakeSubsystem = m_IntakeSubsystem;
-        this.m_pivotSubsystem = m_pivotSubsystem;
 
-        this.pivotState = pivotState;
+        this.m_PivotSubsystem = m_PivotSubsystem;
         this.controller = controller;
 
         addRequirements(m_IntakeSubsystem);
@@ -31,24 +28,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public void initialize(){
-        initialTime = Timer.getTimestamp();
-
-        switch(pivotState) {
-            default:
-                percentOutput = .2;
-                break;
-            case INTAKE:
-                percentOutput = IntakeConstants.IntakePercentOutput;
-                break;
-            case STARTCONFIG:
-                percentOutput = IntakeConstants.IntakePercentOutput;
-                break;
-            case ALGAE:
-                percentOutput = IntakeConstants.AlgaePercentOutput;
-                break;
-        }
-        // m_pivotSubsystem.setPoint(pivotConstant.?????);
-        // m_pivotSubsystem.setCurrentState(PivotPositions.ALGAE);
+        
     }
 
     @Override
@@ -61,7 +41,31 @@ public class IntakeCommand extends Command {
         // m_pivotSubsystem.setPivotPower(m_pivotSubsystem.getOutput());
         // }
         // else if(m_intakeSubsystem.getIntakeSensor() )
-        m_intakeSubsystem.setRollerPower(percentOutput, 1);
+
+        // switch(m_PivotSubsystem.getCurrentState()) {
+        //     default:
+        //         percentOutput = .2;
+        //         break;
+        //     case INTAKE:
+        //         percentOutput = IntakeConstants.IntakePercentOutput;
+        //         break;
+        //     case SCORING:
+        //         percentOutput = IntakeConstants.IntakePercentOutput;
+        //         break;
+        //     case ALGAE:
+        //         percentOutput = IntakeConstants.AlgaePercentOutput;
+        //         break;
+        // }
+        percentOutput = .5;
+        if (controller.getRawButton(GamepadConstants.kAButtonPort) && !controller.getRawButton(GamepadConstants.kRightBumperPort)) {
+            m_intakeSubsystem.setRollerPower(-percentOutput, 1);
+        }
+        else if (controller.getRawButton(GamepadConstants.kAButtonPort) && controller.getRawButton(GamepadConstants.kRightBumperPort)) {
+            m_intakeSubsystem.setRollerPower(percentOutput, 1);
+        }
+        else {
+            m_intakeSubsystem.setRollerPower(0, 1);
+        }
 
     }
 
@@ -73,6 +77,6 @@ public class IntakeCommand extends Command {
 
     @Override
     public boolean isFinished(){
-        return !controller.getRawButton(GamepadConstants.kBButtonPort);
+        return false;
     }
 }

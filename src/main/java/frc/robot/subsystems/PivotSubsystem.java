@@ -34,7 +34,7 @@ public class PivotSubsystem extends SubsystemBase {
     private double testSpeed;
     private double setPoint;
 
-    private PivotPositions currentState;
+    private PivotPositions currentState = PivotPositions.STARTING;
 
     public PivotSubsystem () {
         pivotMotor = new SparkFlex(PortConstants.kPivotPort, MotorType.kBrushless);
@@ -47,7 +47,7 @@ public class PivotSubsystem extends SubsystemBase {
         //     .maxVelocity(0.001);
 
         pivotConfig
-            .inverted(false)
+            .inverted(true)
             .idleMode(IdleMode.kBrake);
             // .closed\Loop.apply(maxMotionConfig)
             // .pid(.0001, 0, 0);
@@ -56,9 +56,9 @@ public class PivotSubsystem extends SubsystemBase {
          pidController = new PIDController(4, 0, 0);
          // encoder = new Encoder(7, 8); //temp holder numbers4 .001
         
-        pivotEncoder = new DutyCycleEncoder(1, 1, pivotConstant.kPivotZeroPosition);
+        pivotEncoder = new DutyCycleEncoder(7, 1, pivotConstant.kPivotZeroPosition);
         testSpeed = 0;
-        currentState = PivotPositions.STARTCONFIG;
+        currentState = null;
     }
 
     //SETTER METHODS
@@ -149,8 +149,8 @@ public class PivotSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Pivot Setpoint", getSetPoint());
         SmartDashboard.putNumber("Pivot Error: ", getPIDError());
         SmartDashboard.putNumber("Through Bore Encoder:", getShaftEncoder());
-        SmartDashboard.putNumber("DSFFSDFSFS:", getCurrentState() == PivotPositions.STARTCONFIG ? 3.1 : 0
-        );
+        // SmartDashboard.putNumber("DSFFSDFSFS:", getCurrentState() == PivotPositions.STARTCONFIG ? 3.1 : 0
+        // );
         SmartDashboard.updateValues();
     }
 }

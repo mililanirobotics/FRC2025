@@ -16,7 +16,10 @@ public class IntakeSubsystem extends SubsystemBase {
     private SparkMax rollerTop;
     private SparkMax rollerBottom;
     private DigitalInput IntakeSensor;
+    private DigitalInput IntakeLeftSensor;
+    private DigitalInput IntakeRightSensor;
     private SparkMaxConfig topMotorConfig;
+    private SparkMaxConfig bottomMotorConfig;
     double topTestSpeed = 0;
     double bottomTestSpeed = 0;
 
@@ -25,10 +28,18 @@ public class IntakeSubsystem extends SubsystemBase {
         rollerBottom = new SparkMax(PortConstants.kRollerBottomPort, MotorType.kBrushless);
 
         IntakeSensor = new DigitalInput(PortConstants.kIntakeSensorPort);
+        IntakeLeftSensor = new DigitalInput(PortConstants.kIntakeLeftSensorPort);
+        IntakeRightSensor = new DigitalInput(PortConstants.kIntakeRightSensorPort);
+
+        bottomMotorConfig = new SparkMaxConfig();
+        bottomMotorConfig
+            .inverted(false)
+            .idleMode(IdleMode.kBrake);
+        rollerBottom.configure(bottomMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         topMotorConfig = new SparkMaxConfig();
         topMotorConfig
-            .inverted(true)
+            .inverted(false)
             .idleMode(IdleMode.kBrake);
         rollerTop.configure(topMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
@@ -43,9 +54,18 @@ public class IntakeSubsystem extends SubsystemBase {
     public void setRollerBottomPower (double power) {
         rollerBottom.set(power);
     }
-    public boolean getIntakeSensor(){
+    public boolean isCoralIn(){
         return !IntakeSensor.get();
     }
+
+    public boolean isCoralInLeftSlot() {
+        return !IntakeLeftSensor.get();
+    } 
+
+    public boolean isCoralInRightSlot() {
+        return !IntakeRightSensor.get();
+    }
+
     public double getBottomSpeed(){
         return rollerBottom.get();
     }
@@ -90,7 +110,9 @@ public class IntakeSubsystem extends SubsystemBase {
     } 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("IntakeSensor: ", getIntakeSensor());
+        SmartDashboard.putBoolean("IntakeSensor: ", isCoralIn());
+        SmartDashboard.putBoolean("LeftSensor: ", isCoralInLeftSlot());
+        SmartDashboard.putBoolean("RightSensor: ", isCoralInRightSlot());
         SmartDashboard.putNumber("Bottom Roller Speed", getBottomSpeed());
         SmartDashboard.putNumber("Top Roller Speed", getTopSpeed());
         SmartDashboard.putNumber("Top Roller Test Speed", getTopTestSpeed());

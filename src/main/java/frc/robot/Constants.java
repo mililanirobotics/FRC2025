@@ -19,6 +19,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -101,10 +102,10 @@ public final class Constants {
     public static final int kRightFrontCANCoderPort = 11;
     public static final int kLeftBackCANCoderPort = 2;
     public static final int kRightBackCANCoderPort = 8;
-    public static final double kLeftFrontCANCoderOffset = 0.203857421875;
-    public static final double kRightFrontCANCoderOffset = -0.2333984375;
-    public static final double kLeftBackCANCoderOffset = -0.0693359375;
-    public static final double kRightBackCANCoderOffset = 0.027099609375;
+    public static final double kLeftFrontCANCoderOffset = 0.0244140625;
+    public static final double kRightFrontCANCoderOffset = .259765625;
+    public static final double kLeftBackCANCoderOffset = 0.49389684375;//017822265625
+    public static final double kRightBackCANCoderOffset = -.023681640625;
 
     public static final int kLeftBackIndex = 2;
     public static final int kRightBackIndex = 3;
@@ -116,9 +117,9 @@ public final class Constants {
 
     // Reverse Booleans
     public static final boolean kLeftFrontDriveReversed = false;
-    public static final boolean kRightFrontDriveReversed = false;
+    public static final boolean kRightFrontDriveReversed = true;
     public static final boolean kLeftBackDriveReversed = false;
-    public static final boolean kRightBackDriveReversed = false;
+    public static final boolean kRightBackDriveReversed = true;
 
     public static final boolean kLeftFrontRotationReversed = false;
     public static final boolean kRightFrontRotationReversed = false;
@@ -131,7 +132,7 @@ public final class Constants {
     public static final boolean kRightBackCANCoderReversed = false;
 
     // PID Constants
-    public static final double kTurningP = 0.3;
+    public static final double kTurningP = 0.15;
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningTolerance = 0.1;
@@ -209,11 +210,11 @@ public final class Constants {
 
   public static class DriveConstants {
     // Drive Speed Constants
-    public static final double kDriveMaxMetersPerSecond = 0.25;
+    public static final double kDriveMaxMetersPerSecond = 2;
     //4.95
-    public static final double kRotationMaxRadiansPerSecond = 0.1 * Math.PI;
+    public static final double kRotationMaxRadiansPerSecond = 1 * Math.PI;
     //2 * Math.PI
-    public static final double kDriveMetersPerSecondLimit = 0.1;//4.5;
+    public static final double kDriveMetersPerSecondLimit = 2;//4.5;
     //3
 
     public static final double kTeleDriveMaxAcceleration = kDriveMaxMetersPerSecond * 8;
@@ -273,21 +274,21 @@ public final class Constants {
     public static final double kAutoDriveMaxAngularAcceleration = kAutoDriveMaxRadiansPerSecond * 8;
 
     //WPLIB constants
-    public static final double kPXController = 1.5;
+    public static final double kPXController = .5;
     public static final double kIXController = 0;
     public static final double kDXController = 0;
 
-    public static final double kPYController = 1.5;
+    public static final double kPYController = .5;
     public static final double kIYController = 0;
     public static final double kDYController = 0;
 
-    public static final double kPThetaController = 3;
+    public static final double kPThetaController = 1.5;
     public static final double kIThetaController = 0;
     public static final double kDThetaController = 0;
 
 
     //PID Constants
-    public static final double kPController = 16;
+    public static final double kPController = .8;
     public static final double kIController = 0;
     public static final double kDController = 0;
 
@@ -337,7 +338,9 @@ public final class Constants {
     public final static int kRightElevatorPort = 15;
     public final static int kLeftElevatorPort = 14;
 
-    public final static int kIntakeSensorPort = 8;
+    public final static int kIntakeSensorPort = 1;
+    public final static int kIntakeLeftSensorPort = 2;
+    public final static int kIntakeRightSensorPort = 3;
 
     public final static int kRollerTopPort = 35;
     public final static int kRollerBottomPort = 17;
@@ -371,7 +374,8 @@ public final class Constants {
   }
 
   public static class pivotConstant {
-    public static final double kPivotZeroPosition = .665;
+    public static final double kPivotZeroPosition = .3;
+    //.665
 
     /**
     Built in Encoder positons
@@ -379,8 +383,8 @@ public final class Constants {
     Up = 0
     */
 
-    public static final double kPivotDownPosition = .228; // Placeholder value, needs to be tested
-    public static final double kPivotUpPosition = 0.0015; // Placeholder value, needs to be tested 102849
+    public static final double kPivotDownPosition = .6617; // Placeholder value, needs to be tested
+    public static final double kPivotUpPosition = 0.2; // Placeholder value, needs to be tested 102849 .3994
     public static final double kElevatedScorePosition = 0.025; //Supposed good value for Scoring while elevated
     public static final double kPivotMiddlePosition = 0.015; // Placeholder value, needs to be tested 102849
     public static final double kPivotAlgaePosition = 0.12;
@@ -393,8 +397,9 @@ public final class Constants {
       INTAKE,
       ALGAE,
       CORALSTATION,
-      STARTCONFIG,
-      STORAGE
+      SCORING,
+      STORAGE,
+      STARTING
     }
   }
 
@@ -406,10 +411,10 @@ public final class Constants {
 
   public static class ElevatorConstants {
 
-    public static final double kGroundCounts = 0;
-    public static final double kLevel1Counts = 0; //Needs Testing
+    public static final double kGroundCounts = 1;
+    public static final double kLevel1Counts = 1; //Needs Testing
     public static final double kLevel2Counts = 20; //Needs Testing
-    public static final double kLevel3Counts = 97; //Needs Testing
+    public static final double kLevel3Counts = 97; //Needs Testing97
 
     public static enum ElevatorPositions {
       GROUND,
@@ -424,5 +429,11 @@ public final class Constants {
   public static class LEDConstants {
     public static final int CANdleID = 7;
     public static final int LEDcount = 74; //69
+
+    public static final Color kLeftSlotColor = new Color(0, 255, 0);
+    public static final Color kRightSlotColor = new Color(255, 0, 0);
+    public static final Color kCoralInColor = new Color(255, 255, 0);
+
+    public static final Color kNeutralColor = new Color(255, 165, 0);
 }
 }

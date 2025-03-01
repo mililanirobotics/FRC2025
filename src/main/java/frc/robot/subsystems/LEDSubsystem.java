@@ -31,8 +31,6 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LEDSubsystem extends SubsystemBase{
-    private PowerDistribution PDH;
-
     private final CANdle m_candle = new CANdle(LEDConstants.CANdleID);
     private final int ledCount = LEDConstants.LEDcount;
 
@@ -47,8 +45,6 @@ public class LEDSubsystem extends SubsystemBase{
     private Color ledColor = new Color(0, 0, 0);
     private int ledWhite;
 
-    private TalonSRX motor;
-
     public enum animations {
         SET_ALL,
         FIRE_ANIM,
@@ -62,17 +58,7 @@ public class LEDSubsystem extends SubsystemBase{
         TWINKLE_ANIM
     }
 
-    private GenericHID controller;
-
-    public LEDSubsystem(GenericHID controller) {
-        motor = new TalonSRX(13);
-
-        
-        PDH = new PowerDistribution(1, ModuleType.kRev);
-        this.controller = controller;
-
-        PDH.setSwitchableChannel(false);
-
+    public LEDSubsystem() {
         CANdleConfiguration configAll = new CANdleConfiguration();
         configAll.statusLedOffWhenActive = true;
         configAll.disableWhenLOS = false;
@@ -195,6 +181,31 @@ public class LEDSubsystem extends SubsystemBase{
         m_candle.animate(new TwinkleAnimation(getR(ledColor), getG(ledColor), getB(ledColor), ledWhite, ledAnimSpeed, ledCount, null, ledOffset), 0);
     }
 
+    public void coralLeftDisplay() {
+        clear();
+        setColor(LEDConstants.kLeftSlotColor);
+    }
+
+    public void coralRightDisplay() {
+        clear();
+        setColor(LEDConstants.kRightSlotColor);
+    }
+
+    public void coralInDisplay() {
+        clear();
+        setColor(LEDConstants.kCoralInColor);
+    }
+
+    public void neutralDisplay() {
+        clear();
+        setColor(LEDConstants.kNeutralColor);
+    }
+    public void neutralBlinkingDisplay() {
+        clear();
+        setAnimSpeed(.6);
+        setColor(LEDConstants.kNeutralColor);
+        rgbFadeAnimation();
+    }
     public void teleoperation() {
         clear();
         setBrightness(1);
@@ -231,10 +242,6 @@ public class LEDSubsystem extends SubsystemBase{
         m_candle.clearAnimation(0);
     }
 
-    public void disableChannel() {
-        PDH.setSwitchableChannel(false);
-    }
-
     @Override
     public void periodic() {
 
@@ -246,23 +253,13 @@ public class LEDSubsystem extends SubsystemBase{
         );
 
         //clear();
-        setBrightness(1);
-        setAnimSpeed(.5);
-        setOffset(0);
-        colorFlowAnimation();
-
+        // setBrightness(1);
+        // setAnimSpeed(.5);
+        // setOffset(0);
+        // colorFlowAnimation();
         SmartDashboard.putNumber("LED_R", getR(ledColor));
         SmartDashboard.putNumber("LED_G", getG(ledColor));
         SmartDashboard.putNumber("LED_B", getB(ledColor));
         SmartDashboard.updateValues();
-
-        if (controller.getRawButton(3)) {
-            PDH.setSwitchableChannel(true);
-        }
-        else {
-            PDH.setSwitchableChannel(false);
-        }
-
-        motor.set(TalonSRXControlMode.PercentOutput, controller.getRawAxis(0));
     }
 }
