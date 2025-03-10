@@ -135,6 +135,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Move Elevator to Level 2", new ElevatorLevel2Command(m_elevatorSubsystem));
     NamedCommands.registerCommand("Move Elevator to Level 3", getAutonomousCommand());
     NamedCommands.registerCommand("Intake", new AutoIntakeCommand(m_intakeSubsystem));
+    NamedCommands.registerCommand("Eject", new EjectCommand(m_intakeSubsystem));
 
     // m_intakeSubsystem.setDefaultCommand(
     //     new ConditionalCommand(
@@ -267,7 +268,7 @@ public class RobotContainer {
         .onTrue(new IntakeControlCommand(m_intakeSubsystem, m_pivotSubsystem, controller0));
        
     new JoystickButton(controller0, GamepadConstants.kAButtonPort)
-        .onTrue(new EjectCommand(m_intakeSubsystem, m_pivotSubsystem.getCurrentState(), controller0));
+        .onTrue(new EjectCommand(m_intakeSubsystem));
 
 
 

@@ -15,10 +15,8 @@ public class EjectCommand extends Command {
     private double percentOutput;
     private double scoringMultiplier;
 
-    public EjectCommand(IntakeSubsystem m_IntakeSubsystem, PivotPositions pivotState, GenericHID controller){
+    public EjectCommand(IntakeSubsystem m_IntakeSubsystem){
         this.m_intakeSubsystem = m_IntakeSubsystem;
-        this.pivotState = pivotState;
-        this.controller = controller;
 
         addRequirements(m_IntakeSubsystem);
         scoringMultiplier = 1;
