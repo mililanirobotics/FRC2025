@@ -9,7 +9,7 @@ public class ElevatorGroundCommand extends Command{
     
     private ElevatorSubsystem m_elevatorSubsystem;
 
-    public ElevatorGroundCommand(ElevatorSubsystem elevatorSubsystem, GenericHID controller){
+    public ElevatorGroundCommand(ElevatorSubsystem elevatorSubsystem){
         m_elevatorSubsystem = elevatorSubsystem;
 
         addRequirements(m_elevatorSubsystem);

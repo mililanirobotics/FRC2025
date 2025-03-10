@@ -1,16 +1,14 @@
 package frc.robot.commands.AutonomousCommands;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.GamepadConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class AutoIntakeCommand extends Command{
     private IntakeSubsystem m_intakeSubsystem;
-    private GenericHID m_controller;
-    public AutoIntakeCommand(IntakeSubsystem intakeSubsystem, GenericHID controller){
+
+    public AutoIntakeCommand(IntakeSubsystem intakeSubsystem){
         m_intakeSubsystem = intakeSubsystem;
-        m_controller = controller;
+        
         addRequirements(m_intakeSubsystem);
     }
     @Override

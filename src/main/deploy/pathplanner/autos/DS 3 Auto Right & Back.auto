@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "DS 3 to Front Right Reef"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Right Reef to Coral Station Bottom"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Coral Station Bottom to Back Reef"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
