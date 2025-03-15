@@ -10,6 +10,7 @@ import frc.robot.Constants.pivotConstant.PivotPositions;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.UselessCommand;
+import frc.robot.commands.AutonomousCommands.AutoAlgaeEjectCommand;
 import frc.robot.commands.AutonomousCommands.AutoIntakeCommand;
 import frc.robot.commands.AutonomousCommands.AutoIntakePivotSensorCommand;
 import frc.robot.commands.AutonomousCommands.AutoOuttakeCommand;
@@ -132,10 +133,15 @@ public class RobotContainer {
       )
     );
 
+    NamedCommands.registerCommand("Move Elevator to Ground", new ElevatorGroundCommand(m_elevatorSubsystem));
     NamedCommands.registerCommand("Move Elevator to Level 2", new ElevatorLevel2Command(m_elevatorSubsystem));
-    NamedCommands.registerCommand("Move Elevator to Level 3", getAutonomousCommand());
+    NamedCommands.registerCommand("Move Elevator to Level 3", new ElevatorLevel3Command(m_elevatorSubsystem));
+    NamedCommands.registerCommand("Move Pivot to Level 2", new AutoPivotMiddleCommand(m_pivotSubsystem));
+    NamedCommands.registerCommand("Move Pivot to Level 3", new AutoPivotUpCommand(m_pivotSubsystem));
     NamedCommands.registerCommand("Intake", new AutoIntakeCommand(m_intakeSubsystem));
-    NamedCommands.registerCommand("Eject", new EjectCommand(m_intakeSubsystem));
+    NamedCommands.registerCommand("Eject", new AutoOuttakeCommand(m_intakeSubsystem));
+    NamedCommands.registerCommand("Remove Algae", new AutoAlgaeEjectCommand(m_intakeSubsystem));
+    
 
     // m_intakeSubsystem.setDefaultCommand(
     //     new ConditionalCommand(

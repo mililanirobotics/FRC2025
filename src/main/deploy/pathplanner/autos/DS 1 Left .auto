@@ -5,21 +5,142 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "DS 1 to Front Left Reef"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DS 1 to Front Left Reef"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Elevator to Level 2"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Pivot to Level 2"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Front Left Reef to Coral Station Top"
+            "name": "Eject"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Coral Station Top to Front Left Reef"
+            "name": "Move Elevator to Level 3"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Remove Algae"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Front Left Reef to Coral Station Top"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Elevator to Ground"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Pivot to Level 3"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Coral Station Top to Front Left Reef"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Elevator to Level 3"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Pivot to Level 3"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Eject"
           }
         }
       ]

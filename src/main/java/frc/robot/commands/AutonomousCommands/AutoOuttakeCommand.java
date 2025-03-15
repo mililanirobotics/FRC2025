@@ -24,7 +24,7 @@ public class AutoOuttakeCommand extends Command {
 
     @Override
     public boolean isFinished(){
-        // return m_intakeSubsystem.getRollerSensor() && m_intakeSubsystem.getLeftPathSensor() && m_intakeSubsystem.getRightPathSensor();
-        return true;
+        return !m_intakeSubsystem.isCoralIn() && !m_intakeSubsystem.isCoralInLeftSlot() && !m_intakeSubsystem.isCoralInRightSlot();
+        
     }
 }
