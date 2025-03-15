@@ -118,7 +118,7 @@ public final class Constants {
     // Reverse Booleans
     public static final boolean kLeftFrontDriveReversed = false;
     public static final boolean kRightFrontDriveReversed = true;
-    public static final boolean kLeftBackDriveReversed = false;
+    public static final boolean kLeftBackDriveReversed = true;
     public static final boolean kRightBackDriveReversed = true;
 
     public static final boolean kLeftFrontRotationReversed = false;
@@ -374,7 +374,7 @@ public final class Constants {
   }
 
   public static class pivotConstant {
-    public static final double kPivotZeroPosition = .3;
+    public static final double kPivotZeroPosition = .615; //.3
     //.665
 
     /**
@@ -383,15 +383,32 @@ public final class Constants {
     Up = 0
     */
 
-    public static final double kPivotDownPosition = .6617; // Placeholder value, needs to be tested
-    public static final double kPivotUpPosition = 0.2; // Placeholder value, needs to be tested 102849 .3994
-    public static final double kElevatedScorePosition = 0.025; //Supposed good value for Scoring while elevated
-    public static final double kPivotMiddlePosition = 0.015; // Placeholder value, needs to be tested 102849
-    public static final double kPivotAlgaePosition = 0.12;
+    //.6665
+    //.625
+
+    //.0415
+    //.065
+    //.055
+    //.16
+
+    //OLD
+    //down .228
+    //up .0015
+    //esp .025
+    //pmp .015
+    //pap .12
+
+    public static final double kPivotDownPosition = .3174; // Placeholder value, needs to be tested
+    public static final double kPivotUpPosition = 0.04; // Placeholder value, needs to be tested 102849 .3994
+    public static final double kElevatedScorePosition = 0.0821; //Supposed good value for Scoring while elevated
+    public static final double kPivotMiddlePosition = 0.1584; // Placeholder value, needs to be tested 102849
+    public static final double kPivotAlgaePosition = 0.1678;
 
     public static final double kPivotSensorPosition = 0.01; //placeholder :(
 
-    public static final double kPivotTolerance = .0025;
+    public static final double kPivotTolerance = .0035;
+
+    public static final double kMaximumOutput = 0.7;
 
     public static enum PivotPositions {
       INTAKE,
@@ -410,6 +427,7 @@ public final class Constants {
   }
 
   public static class ElevatorConstants {
+    public static final double kMaximumOutput = .7;
 
     public static final double kGroundCounts = 1;
     public static final double kLevel1Counts = 1; //Needs Testing
