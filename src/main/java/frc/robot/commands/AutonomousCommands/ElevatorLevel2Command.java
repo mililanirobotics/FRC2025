@@ -1,6 +1,5 @@
 package frc.robot.commands.AutonomousCommands;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -9,7 +8,7 @@ public class ElevatorLevel2Command extends Command {
     
     private ElevatorSubsystem m_elevatorSubsystem;
 
-    public ElevatorLevel2Command(ElevatorSubsystem elevatorSubsystem, GenericHID controller){
+    public ElevatorLevel2Command(ElevatorSubsystem elevatorSubsystem){
         m_elevatorSubsystem = elevatorSubsystem;
 
         addRequirements(m_elevatorSubsystem);

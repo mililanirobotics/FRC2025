@@ -39,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
         topMotorConfig = new SparkMaxConfig();
         topMotorConfig
-            .inverted(false)
+            .inverted(true)
             .idleMode(IdleMode.kBrake);
         rollerTop.configure(topMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
@@ -54,14 +54,21 @@ public class IntakeSubsystem extends SubsystemBase {
     public void setRollerBottomPower (double power) {
         rollerBottom.set(power);
     }
+    /*
+     * Returns true if the intake sensor is broken to detect if the coral is inside the payload.
+     */
     public boolean isCoralIn(){
         return !IntakeSensor.get();
     }
-
+    /*
+     * Returns true if the left slot's sensor is broken.
+     */
     public boolean isCoralInLeftSlot() {
         return !IntakeLeftSensor.get();
     } 
-
+    /*
+     * Returns true if the right slot's sensor is broken.
+     */
     public boolean isCoralInRightSlot() {
         return !IntakeRightSensor.get();
     }
