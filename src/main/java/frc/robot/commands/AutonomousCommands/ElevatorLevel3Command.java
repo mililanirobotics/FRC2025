@@ -21,8 +21,11 @@ public class ElevatorLevel3Command extends Command {
 
     @Override
     public void execute(){
-        m_elevatorSubsystem.setPower(m_elevatorSubsystem.getOutput());
-    }
+        m_elevatorSubsystem.setPower(
+            Math.abs(m_elevatorSubsystem.getOutput()) > ElevatorConstants.kMaximumOutput ? 
+            Math.copySign(ElevatorConstants.kMaximumOutput, m_elevatorSubsystem.getOutput()) 
+            : m_elevatorSubsystem.getOutput());
+    }    
     @Override
     public void end(boolean interupted){
         m_elevatorSubsystem.shutdown();

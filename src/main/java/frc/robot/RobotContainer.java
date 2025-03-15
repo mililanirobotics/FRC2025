@@ -123,7 +123,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
-    CameraServer.startAutomaticCapture();
+    // CameraServer.startAutomaticCapture();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Path", autoChooser);
     
@@ -369,30 +369,38 @@ public class RobotContainer {
     // Presets
     new POVButton(controller0, GamepadConstants.kDpadUp)
       .onTrue(
-        new ElevatorLevel3Command(m_elevatorSubsystem)
-        // new AutoPivotUpCommand(m_pivotSubsystem)
-        //   .alongWith(
-        //     new ElevatorLevel3Command(m_elevatorSubsystem, controller0)
-        //   )
+        // new ElevatorLevel3Command(m_elevatorSubsystem, controller0)
+        new AutoPivotUpCommand(m_pivotSubsystem)
+          .alongWith(
+            new ElevatorLevel3Command(m_elevatorSubsystem, controller0)
+          )
       );
 
     new POVButton(controller0, GamepadConstants.kDpadRight)
         .onTrue(
-          new ElevatorLevel2Command(m_elevatorSubsystem)
-            // new AutoPivotMiddleCommand(m_pivotSubsystem)
-            //     .alongWith(
-            //         new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
-            //     )
+          // new ElevatorLevel2Command(m_elevatorSubsystem, controller0)
+            new AutoPivotAlgaeCommand(m_pivotSubsystem, controller0)
+                // .alongWith(
+                //     new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
+                // )
+    );
+
+    new POVButton(controller0, GamepadConstants.kDpadLeft)
+        .onTrue(
+          new AutoPivotMiddleCommand(m_pivotSubsystem)
+          .alongWith(
+            new ElevatorLevel2Command(m_elevatorSubsystem, controller0)                
+          )
     );
     
-    // new POVButton(controller0, GamepadConstants.kDpadDown)
-    //     .onTrue(
-    //       new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
-    //         // new AutoPivotDownComand(m_pivotSubsystem)
-    //         //     .alongWith(
-    //         //         new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
-    //         //     )
-    // );
+    new POVButton(controller0, GamepadConstants.kDpadDown)
+        .onTrue(
+          // new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
+          new AutoPivotDownComand(m_pivotSubsystem)
+            .alongWith(
+              new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
+            )
+    );
 
     new JoystickButton(controller0, GamepadConstants.kXButtonPort)
       .onTrue(new InstantCommand(()-> m_SwerveDriveSubsystem.zeroOutGyro()));
@@ -408,12 +416,12 @@ public class RobotContainer {
 
   public void autonomousInit() {
     zeroYaw();
-    m_LEDSubsystem.clear();
+    // m_LEDSubsystem.clear();
     m_LEDSubsystem.autonomous();
   }
 
   public void disabledInit() {
-    m_LEDSubsystem.clear();
+    // m_LEDSubsystem.clear();
     m_LEDSubsystem.disableAnimation();
   }
 

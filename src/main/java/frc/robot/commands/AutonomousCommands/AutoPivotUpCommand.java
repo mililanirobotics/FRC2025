@@ -19,11 +19,15 @@ public class AutoPivotUpCommand extends Command{
     }
     @Override
     public void execute(){
-        m_PivotSubsystem.setPivotPower(m_PivotSubsystem.getOutput());
+        m_PivotSubsystem.setPivotPower(
+            Math.abs(m_PivotSubsystem.getOutput()) > pivotConstant.kMaximumOutput ? 
+            Math.copySign(pivotConstant.kMaximumOutput, m_PivotSubsystem.getOutput()) 
+            : m_PivotSubsystem.getOutput());
     }
     @Override
     public void end(boolean interupted){
         m_PivotSubsystem.shutdown();
+        System.out.println("Pivot Up finished");
     }
     @Override
     public boolean isFinished(){

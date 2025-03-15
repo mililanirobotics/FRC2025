@@ -207,11 +207,11 @@ public class LEDSubsystem extends SubsystemBase{
         rgbFadeAnimation();
     }
     public void teleoperation() {
-        clear();
-        setBrightness(1);
-        setAnimSpeed(.5);
-        setOffset(0);
-        rainbowAnimation();
+        // clear();
+        // setBrightness(1);
+        // setAnimSpeed(.5);
+        // setOffset(0);
+        // rainbowAnimation();
         // setBrightness(1);
         // setAnimSpeed(.5);
         // setColor(new Color(0, 150, 255));
@@ -219,11 +219,11 @@ public class LEDSubsystem extends SubsystemBase{
     }
 
     public void autonomous() {
-        clear();
-        setBrightness(1);
-        setAnimSpeed(.5);
-        setOffset(0);
-        larsonAnimation();
+        // clear();
+        // setBrightness(1);
+        // setAnimSpeed(.5);
+        // setOffset(0);
+        // larsonAnimation();
     }
 
     public void disabled() {
@@ -232,10 +232,10 @@ public class LEDSubsystem extends SubsystemBase{
         // setAnimSpeed(.5);
         // setOffset(0);
         // setAnimation(animations.RAINBOW_ANIM);
-        setBrightness(1);
-        setAnimSpeed(.5);
-        setColor(new Color(255, 30, 0));
-        singleFadeAnimation();  
+        // setBrightness(1);
+        // setAnimSpeed(.5);
+        // setColor(new Color(255, 30, 0));
+        // singleFadeAnimation();  
     }
 
     public void clear() {
@@ -245,18 +245,19 @@ public class LEDSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
 
-        setColor(
-        new Color(
-            0,
-            30, 
-            255)
-        );
+        // setColor(
+        // new Color(
+        //     0,
+        //     30, 
+        //     255)
+        // // );
 
-        //clear();
-        // setBrightness(1);
-        // setAnimSpeed(.5);
-        // setOffset(0);
+        // clear();
+        setBrightness(.5);
+        setAnimSpeed(.5);
+        setOffset(0);
         // colorFlowAnimation();
+        rainbowAnimation();
         SmartDashboard.putNumber("LED_R", getR(ledColor));
         SmartDashboard.putNumber("LED_G", getG(ledColor));
         SmartDashboard.putNumber("LED_B", getB(ledColor));
