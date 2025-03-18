@@ -20,7 +20,7 @@ public class ElevatorControlCommand extends Command{
 
     @Override
     public void initialize(){
-        percentOutput = .75;
+        percentOutput = .25;
     }
 
     @Override

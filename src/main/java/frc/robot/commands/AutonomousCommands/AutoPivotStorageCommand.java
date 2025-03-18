@@ -1,24 +1,21 @@
 package frc.robot.commands.AutonomousCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.pivotConstant;
 import frc.robot.Constants.pivotConstant.PivotPositions;
 import frc.robot.subsystems.PivotSubsystem;
 
-
-public class AutoPivotAlgaeCommand extends Command{
+public class AutoPivotStorageCommand extends Command{
     private PivotSubsystem m_PivotSubsystem;
-
-    public AutoPivotAlgaeCommand (PivotSubsystem pivotSubsystem){
+    public AutoPivotStorageCommand(PivotSubsystem pivotSubsystem){
         m_PivotSubsystem = pivotSubsystem;
         
         addRequirements(m_PivotSubsystem);
     }
     @Override
     public void initialize(){
-        m_PivotSubsystem.setPoint(pivotConstant.kPivotAlgaePosition);
-        m_PivotSubsystem.setCurrentState(PivotPositions.INTAKE);
+        m_PivotSubsystem.setPoint(pivotConstant.kPivotUpPosition);
+        m_PivotSubsystem.setCurrentState(PivotPositions.SCORING);
     }
     @Override
     public void execute(){
@@ -30,11 +27,9 @@ public class AutoPivotAlgaeCommand extends Command{
     @Override
     public void end(boolean interupted){
         m_PivotSubsystem.shutdown();
-        System.out.println("Pivot Algae finished");
+        System.out.println("Pivot Up finished");
     }
     @Override
     public boolean isFinished(){
-        return Math.abs(m_PivotSubsystem.getPIDError()) <= pivotConstant.kPivotTolerance;
-
-    }
+        return Math.abs(m_PivotSubsystem.getPIDError()) <= pivotConstant.kPivotTolerance;    }
 }

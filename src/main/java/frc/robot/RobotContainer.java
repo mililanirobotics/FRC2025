@@ -18,6 +18,7 @@ import frc.robot.commands.AutonomousCommands.AutoPivotAlgaeCommand;
 import frc.robot.commands.AutonomousCommands.AutoPivotDownComand;
 import frc.robot.commands.AutonomousCommands.AutoPivotMiddleCommand;
 import frc.robot.commands.AutonomousCommands.AutoPivotSensorCommand;
+import frc.robot.commands.AutonomousCommands.AutoPivotStorageCommand;
 import frc.robot.commands.AutonomousCommands.AutoPivotUpCommand;
 import frc.robot.commands.AutonomousCommands.ElevatorGroundCommand;
 import frc.robot.commands.AutonomousCommands.ElevatorLevel1Command;
@@ -202,29 +203,29 @@ public class RobotContainer {
     
     //elevator test commands
 
-    new JoystickButton(controller1, GamepadConstants.kAButtonPort)
-        .onTrue(new ElevatorTestDownSpeedCommand(m_elevatorSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kYButtonPort)
-        .onTrue(new ElevatorTestUpSpeedCommand(m_elevatorSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kBButtonPort)
-        .onTrue(new ElevatorTestShutdownCommand(m_elevatorSubsystem, controller1));
-    new JoystickButton(controller1, GamepadConstants.kXButtonPort)
-        .onTrue(new ElevatorTestSetPowerCommand(m_elevatorSubsystem, controller1));
+    // new JoystickButton(controller1, GamepadConstants.kAButtonPort)
+    //     .onTrue(new ElevatorTestDownSpeedCommand(m_elevatorSubsystem, controller1));
+    // new JoystickButton(controller1, GamepadConstants.kYButtonPort)
+    //     .onTrue(new ElevatorTestUpSpeedCommand(m_elevatorSubsystem, controller1));
+    // new JoystickButton(controller1, GamepadConstants.kBButtonPort)
+    //     .onTrue(new ElevatorTestShutdownCommand(m_elevatorSubsystem, controller1));
+    // new JoystickButton(controller1, GamepadConstants.kXButtonPort)
+    //     .onTrue(new ElevatorTestSetPowerCommand(m_elevatorSubsystem, controller1));
     
 
-    new JoystickButton(controller1, GamepadConstants.kLeftTriggerPort)
-        .onTrue(new AutoIntakePivotSensorCommand(m_intakeSubsystem, m_pivotSubsystem.getCurrentState(), controller1, m_pivotSubsystem));
+    // new JoystickButton(controller1, GamepadConstants.kLeftTriggerPort)
+    //     .onTrue(new AutoIntakePivotSensorCommand(m_intakeSubsystem, m_pivotSubsystem.getCurrentState(), controller1, m_pivotSubsystem));
 
     //pivot test commands
 
-    new POVButton(controller1, GamepadConstants.kDpadDown)
-        .onTrue(new PivotTestDownSpeedCommand(m_pivotSubsystem, controller1));
-    new POVButton(controller1, GamepadConstants.kDpadUp)
-        .onTrue(new PivotTestUpSpeedCommand(m_pivotSubsystem, controller1));
-    new POVButton(controller1, GamepadConstants.kDpadRight)
-        .onTrue(new PivotTestShutdownSpeedCommand(m_pivotSubsystem, controller1));
-    new POVButton(controller1, GamepadConstants.kDpadLeft)
-        .onTrue(new PivotSetPowerCommand(m_pivotSubsystem, controller1));
+    // new POVButton(controller1, GamepadConstants.kDpadDown)
+    //     .onTrue(new PivotTestDownSpeedCommand(m_pivotSubsystem, controller1));
+    // new POVButton(controller1, GamepadConstants.kDpadUp)
+    //     .onTrue(new PivotTestUpSpeedCommand(m_pivotSubsystem, controller1));
+    // new POVButton(controller1, GamepadConstants.kDpadRight)
+    //     .onTrue(new PivotTestShutdownSpeedCommand(m_pivotSubsystem, controller1));
+    // new POVButton(controller1, GamepadConstants.kDpadLeft)
+    //     .onTrue(new PivotSetPowerCommand(m_pivotSubsystem, controller1));
 
 
     //top roller test commands
@@ -254,44 +255,44 @@ public class RobotContainer {
 
     // PIVOT CONTROLS
 
-    new JoystickButton(controller0, GamepadConstants.kLeftBumperPort)
-        .onTrue(new AutoPivotDownComand(m_pivotSubsystem));
+    // new JoystickButton(controller0, GamepadConstants.kLeftBumperPort)
+    //     .onTrue(new AutoPivotDownComand(m_pivotSubsystem));
     
-    new JoystickButton(controller0, GamepadConstants.kRightBumperPort)
-        .onTrue(new AutoPivotUpCommand(m_pivotSubsystem));
+    // new JoystickButton(controller0, GamepadConstants.kRightBumperPort)
+    //     .onTrue(new AutoPivotUpCommand(m_pivotSubsystem));
 
-    new POVButton(controller0, GamepadConstants.kDpadUp)
-        .onTrue(new AutoPivotMiddleCommand(m_pivotSubsystem));
+    // new POVButton(controller0, GamepadConstants.kDpadUp)
+    //     .onTrue(new AutoPivotMiddleCommand(m_pivotSubsystem));
         
-    new POVButton(controller0, GamepadConstants.kDpadRight)
-        .onTrue(new AutoPivotAlgaeCommand(m_pivotSubsystem));
+    // new POVButton(controller0, GamepadConstants.kDpadRight)
+    //     .onTrue(new AutoPivotAlgaeCommand(m_pivotSubsystem));
 
 
 
     // INTAKE CONTROLS
 
-    new JoystickButton(controller0, GamepadConstants.kBButtonPort)
-        .onTrue(new IntakeControlCommand(m_intakeSubsystem, m_pivotSubsystem, controller0));
+    // new JoystickButton(controller0, GamepadConstants.kBButtonPort)
+    //     .onTrue(new IntakeControlCommand(m_intakeSubsystem, m_pivotSubsystem, controller0));
        
-    new JoystickButton(controller0, GamepadConstants.kAButtonPort)
-        .onTrue(new EjectCommand(m_intakeSubsystem));
+    // new JoystickButton(controller0, GamepadConstants.kAButtonPort)
+    //     .onTrue(new EjectCommand(m_intakeSubsystem));
 
 
 
 
     // ELEVATOR AND SCORING CONTROLS    
-    new POVButton(controller0, GamepadConstants.kDpadDown)
-        .onTrue(new ElevatorGroundCommand(m_elevatorSubsystem));
+    // new POVButton(controller0, GamepadConstants.kDpadDown)
+    //     .onTrue(new ElevatorGroundCommand(m_elevatorSubsystem));
     
-    new JoystickButton(controller0, GamepadConstants.kYButtonPort)
-        .onTrue(new AutoPivotUpCommand(m_pivotSubsystem));
-    new JoystickButton(controller0, GamepadConstants.kYButtonPort)
-        .onTrue(new ElevatorLevel3Command(m_elevatorSubsystem));
+    // new JoystickButton(controller0, GamepadConstants.kYButtonPort)
+    //     .onTrue(new AutoPivotUpCommand(m_pivotSubsystem));
+    // new JoystickButton(controller0, GamepadConstants.kYButtonPort)
+    //     .onTrue(new ElevatorLevel3Command(m_elevatorSubsystem));
 
-    new JoystickButton(controller0, GamepadConstants.kXButtonPort)
-        .onTrue(new AutoPivotMiddleCommand(m_pivotSubsystem));
-    new JoystickButton(controller0, GamepadConstants.kXButtonPort)
-        .onTrue(new ElevatorLevel2Command(m_elevatorSubsystem));
+    // new JoystickButton(controller0, GamepadConstants.kXButtonPort)
+    //     .onTrue(new AutoPivotMiddleCommand(m_pivotSubsystem));
+    // new JoystickButton(controller0, GamepadConstants.kXButtonPort)
+    //     .onTrue(new ElevatorLevel2Command(m_elevatorSubsystem));
     
 
 
@@ -345,12 +346,12 @@ public class RobotContainer {
     // OFFICIAL GAMEPAD 0 CONTROLLER SCHEME
 
     // Align left on reef
-    new JoystickButton(controller0, GamepadConstants.kLeftBumperPort)
-        .onTrue(new AlignLeftCommand(m_SwerveDriveSubsystem, m_LimelightSubsystem));
+    // new JoystickButton(controller0, GamepadConstants.kLeftBumperPort)
+    //     .onTrue(new AlignLeftCommand(m_SwerveDriveSubsystem, m_LimelightSubsystem));
 
-    // Align right on reef
-    new JoystickButton(controller0, GamepadConstants.kRightBumperPort)
-    .onTrue(new AlignRightCommand(m_SwerveDriveSubsystem, m_LimelightSubsystem));
+    // // Align right on reef
+    // new JoystickButton(controller0, GamepadConstants.kRightBumperPort)
+    // .onTrue(new AlignRightCommand(m_SwerveDriveSubsystem, m_LimelightSubsystem));
 
     //Align left coral station
     // new Trigger(
@@ -367,19 +368,30 @@ public class RobotContainer {
     //     );
 
     // Presets
+
+    new Trigger(()-> controller0.getRawAxis(GamepadConstants.kLeftTriggerPort) >= .5)
+      .onTrue(
+        new AutoPivotStorageCommand(m_pivotSubsystem)
+          .alongWith(new ElevatorGroundCommand(m_elevatorSubsystem))
+      );
+
+
     new POVButton(controller0, GamepadConstants.kDpadUp)
       .onTrue(
-        // new ElevatorLevel3Command(m_elevatorSubsystem, controller0)
+        // new ElevatorLevel3Command(m_elevatorSubsystem)
         new AutoPivotUpCommand(m_pivotSubsystem)
           .alongWith(
-            new ElevatorLevel3Command(m_elevatorSubsystem, controller0)
+            new ElevatorLevel3Command(m_elevatorSubsystem)
           )
       );
 
     new POVButton(controller0, GamepadConstants.kDpadRight)
         .onTrue(
-          // new ElevatorLevel2Command(m_elevatorSubsystem, controller0)
-            new AutoPivotAlgaeCommand(m_pivotSubsystem, controller0)
+          new AutoPivotMiddleCommand(m_pivotSubsystem)
+            .alongWith(
+              new ElevatorLevel2Command(m_elevatorSubsystem)
+            )
+            // new AutoPivotAlgaeCommand(m_pivotSubsystem)
                 // .alongWith(
                 //     new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
                 // )
@@ -387,18 +399,18 @@ public class RobotContainer {
 
     new POVButton(controller0, GamepadConstants.kDpadLeft)
         .onTrue(
-          new AutoPivotMiddleCommand(m_pivotSubsystem)
+          new AutoPivotAlgaeCommand(m_pivotSubsystem)
           .alongWith(
-            new ElevatorLevel2Command(m_elevatorSubsystem, controller0)                
+            new ElevatorGroundCommand(m_elevatorSubsystem)                
           )
     );
     
     new POVButton(controller0, GamepadConstants.kDpadDown)
         .onTrue(
-          // new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
+          // new ElevatorGroundCommand(m_elevatorSubsystem)
           new AutoPivotDownComand(m_pivotSubsystem)
             .alongWith(
-              new ElevatorGroundCommand(m_elevatorSubsystem, controller0)
+              new ElevatorGroundCommand(m_elevatorSubsystem)
             )
     );
 
@@ -411,7 +423,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // return Autos.exampleAuto(m_exampleSubsystem);
     // return new PathPlannerAuto("LEAVE-BLUE");
-    return autoChooser.getSelected();
+    // return autoChooser.getSelected();
+    return null;
   }
 
   public void autonomousInit() {

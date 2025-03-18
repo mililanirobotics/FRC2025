@@ -39,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
         topMotorConfig = new SparkMaxConfig();
         topMotorConfig
-            .inverted(true)
+            .inverted(false)
             .idleMode(IdleMode.kBrake);
         rollerTop.configure(topMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
