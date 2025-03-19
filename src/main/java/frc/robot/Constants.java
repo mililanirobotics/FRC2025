@@ -362,6 +362,8 @@ public final class Constants {
     public static final double kLeftAlignOffset = 14.49; //Testing
     public static final double kRightAlignOffset = -1.55; //Testing
 
+    public static final int[] kReefAprilTagIDs = {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};
+
     public static enum VisionConstants {
       LEFTCORAL,
       RIGHTCORAL
@@ -401,7 +403,7 @@ public final class Constants {
 
     public static final double kPivotDownPosition = .482; // Placeholder value, needs to be tested
     public static final double kPivotUpPosition = 0.19; // Placeholder value, needs to be tested 102849 .3994
-    public static final double kElevatedScorePosition = 0.244; //Supposed good value for Scoring while elevated
+    public static final double kElevatedScorePosition = 0.2728; //Supposed good value for Scoring while elevated
     public static final double kPivotMiddlePosition = 0.3203; // Placeholder value, needs to be tested 102849
     public static final double kPivotAlgaePosition = 0.3297;
 
@@ -433,7 +435,7 @@ public final class Constants {
 
     public static final double kGroundCounts = 1;
     public static final double kLevel1Counts = 1; //Needs Testing
-    public static final double kLevel2Counts = 20; //Needs Testing
+    public static final double kLevel2Counts = 50.14; //Needs Testing
     public static final double kLevel3Counts = 97; //Needs Testing97
 
     public static enum ElevatorPositions {

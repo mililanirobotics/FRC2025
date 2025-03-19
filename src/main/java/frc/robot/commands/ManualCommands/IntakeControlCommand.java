@@ -42,21 +42,25 @@ public class IntakeControlCommand extends Command {
         // }
         // else if(m_intakeSubsystem.getIntakeSensor() )
 
-        // switch(m_PivotSubsystem.getCurrentState()) {
-        //     default:
-        //         percentOutput = .2;
-        //         break;
-        //     case INTAKE:
-        //         percentOutput = IntakeConstants.IntakePercentOutput;
-        //         break;
-        //     case SCORING:
-        //         percentOutput = IntakeConstants.IntakePercentOutput;
-        //         break;
-        //     case ALGAE:
-        //         percentOutput = IntakeConstants.AlgaePercentOutput;
-        //         break;
-        // }
-        percentOutput = .5;
+        if (m_intakeSubsystem.getAutoIntake()) {
+            return;
+        }
+
+        switch(m_PivotSubsystem.getCurrentState()) {
+            default:
+                percentOutput = .2;
+                break;
+            case INTAKE:
+                percentOutput = IntakeConstants.IntakePercentOutput;
+                break;
+            case SCORING:
+                percentOutput = IntakeConstants.IntakePercentOutput;
+                break;
+            case ALGAE:
+                percentOutput = IntakeConstants.AlgaePercentOutput;
+                break;
+        }
+        // percentOutput = .5;
         if (controller.getRawButton(GamepadConstants.kAButtonPort) && !controller.getRawButton(GamepadConstants.kRightBumperPort)) {
             m_intakeSubsystem.setRollerPower(-percentOutput, 1);
         }

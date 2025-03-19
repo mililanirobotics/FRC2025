@@ -26,6 +26,7 @@ public class SwerveControlCommand extends Command{
     private GenericHID gamepad;
     
     private PIDController pid;
+    private double currentPosition;
 
     public SwerveControlCommand(SwerveDriveSubsystem swerveDriveSubsystem, GenericHID gamepad) {
         m_SwerveDriveSubsystem = swerveDriveSubsystem;
@@ -35,7 +36,7 @@ public class SwerveControlCommand extends Command{
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAcceleration);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleRotationMaxAngularAcceleration);
 
-        pid = new PIDController(0.001, 0, 0);
+        pid = new PIDController(0.01, 0, 0);
 
         addRequirements(m_SwerveDriveSubsystem);
     }
@@ -47,26 +48,36 @@ public class SwerveControlCommand extends Command{
         double xSpeed = gamepad.getRawAxis(GamepadConstants.kLeftYJoystickPort);
         double ySpeed = gamepad.getRawAxis(GamepadConstants.kLeftXJoystickPort);
         double turningSpeed = gamepad.getRawAxis(GamepadConstants.kRightXJoystickPort);
+        if (Math.abs(turningSpeed) > 0) {
+            m_SwerveDriveSubsystem.setHeadingLimiter(false);
+        }
 
         if(gamepad.getRawAxis(GamepadConstants.kRightTriggerPort) >= 0.5) {
-            xSpeed *= 0.3;
-            ySpeed *= 0.3;
-            turningSpeed *= 0.3;
+            xSpeed *= 0.25;
+            ySpeed *= 0.25;
+            turningSpeed *= 0.25;
         }
         
         // Apply Deadband to prevent motors accidentally spinning
         xSpeed = Math.abs(xSpeed) > GamepadConstants.kDeadzone ? xSpeed : 0.0;
         ySpeed = Math.abs(ySpeed) > GamepadConstants.kDeadzone ? ySpeed : 0.0; 
-        turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
+        // turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
 
-        // if (m_SwerveDriveSubsystem.isHeadingLimited()) {
-        //     pid.setSetpoint(m_SwerveDriveSubsystem.getDesiredHeading());
-        //     pid.setTolerance(1);
-        //     turningSpeed = pid.calculate(m_SwerveDriveSubsystem.getDegrees());
-        // }
-        // else {
-        //     turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
-        // }
+        if (m_SwerveDriveSubsystem.isHeadingLimited()) {
+            pid.setSetpoint(m_SwerveDriveSubsystem.getDesiredHeading());
+            pid.setTolerance(1);
+            
+            currentPosition = m_SwerveDriveSubsystem.getDegrees();
+
+            pid.calculate(currentPosition);
+            if (Math.abs(pid.getError()) > 180) {
+                currentPosition = currentPosition - 360;    
+            }
+            turningSpeed = -pid.calculate(currentPosition);
+        }
+        else {
+            turningSpeed = Math.abs(turningSpeed) > GamepadConstants.kDeadzone ? turningSpeed : 0.0;
+        }
 
         //Limiting Drive Speeds Acceleration to be linear
         xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kDriveMetersPerSecondLimit;
@@ -89,6 +100,9 @@ public class SwerveControlCommand extends Command{
         SmartDashboard.putNumber("Naxv Yaw", m_SwerveDriveSubsystem.getYawReverse());
         SmartDashboard.putNumber("Naxv Degrees", m_SwerveDriveSubsystem.getDegrees());
         SmartDashboard.putNumber("Radians", m_SwerveDriveSubsystem.getRad());
+        SmartDashboard.putNumber("Theta Error", pid.getError());
+        SmartDashboard.putNumber("SGJVSGNJEDWJNVDSNSVNDADC", pid.calculate(m_SwerveDriveSubsystem.getDegrees()));
+        SmartDashboard.updateValues();
     }
     
     // Called once the command ends or is interrupted.

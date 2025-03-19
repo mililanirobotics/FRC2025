@@ -58,7 +58,7 @@ public class PivotSubsystem extends SubsystemBase {
         
         pivotEncoder = new DutyCycleEncoder(PortConstants.kPivotEncoderPort, 1, pivotConstant.kPivotZeroPosition);
         testSpeed = 0;
-        currentState = null;
+        currentState = PivotPositions.STARTING;
     }
 
     //SETTER METHODS

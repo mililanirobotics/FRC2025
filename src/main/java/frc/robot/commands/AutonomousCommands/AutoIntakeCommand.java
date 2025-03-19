@@ -16,7 +16,7 @@ public class AutoIntakeCommand extends Command{
     }
     @Override
     public void execute(){
-    m_intakeSubsystem.setRollerPower(0.6, 1);
+        m_intakeSubsystem.setRollerPower(0.6, 1);
     }
     @Override
     public void end(boolean interupted){

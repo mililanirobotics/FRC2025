@@ -22,6 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private SparkMaxConfig bottomMotorConfig;
     double topTestSpeed = 0;
     double bottomTestSpeed = 0;
+    private boolean autoIntaking;
 
     public IntakeSubsystem () {
         rollerTop = new SparkMax(PortConstants.kRollerTopPort, MotorType.kBrushless);
@@ -54,6 +55,15 @@ public class IntakeSubsystem extends SubsystemBase {
     public void setRollerBottomPower (double power) {
         rollerBottom.set(power);
     }
+
+    public boolean getAutoIntake() {
+        return autoIntaking;
+    }
+
+    public void setAutoIntake(boolean autoIntaking) {
+        this.autoIntaking = autoIntaking;
+    }
+
     /*
      * Returns true if the intake sensor is broken to detect if the coral is inside the payload.
      */

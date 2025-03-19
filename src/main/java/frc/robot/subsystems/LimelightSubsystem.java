@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LimelightConstants;
 
 public class LimelightSubsystem extends SubsystemBase {
     private NetworkTable table;
@@ -41,7 +42,13 @@ public class LimelightSubsystem extends SubsystemBase {
     }
 
     public boolean isReefTargetFound() {
-        return false;
+        // for(int i = 0; i < LimelightConstants.kReefAprilTagIDs.length; i++) {
+        //     if ((int)getTagID() == LimelightConstants.kReefAprilTagIDs[i]) {
+        //         return true;
+        //     }
+        // }
+        // return false;
+        return true;
     }
 
     public double getTagID() {
@@ -86,5 +93,6 @@ public class LimelightSubsystem extends SubsystemBase {
         //prints the state of the pistons on Smartdashboard
         SmartDashboard.putNumber("Tx Offset", getHorizontalOffset());
         SmartDashboard.putNumber("Ty Offset", getVerticalOffset());
+        SmartDashboard.putNumber("AprilTag ID", getTagID());
     } 
 }

@@ -57,6 +57,7 @@ import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerShutdownCo
 import frc.robot.commands.TestCommands.TopRollerTestCommands.TopRollerUpSpeedCommand;
 import frc.robot.commands.VisionCommands.AlignLeftCommand;
 import frc.robot.commands.VisionCommands.AlignRightCommand;
+import frc.robot.commands.VisionCommands.ThetaAlignCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.HangSubsystem;
@@ -83,6 +84,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -367,9 +369,45 @@ public class RobotContainer {
     //         new RightCoralStationAlignCommand(m_SwerveDriveSubsystem)
     //     );
 
+  //Algin right coral station
+    new Trigger(
+          () -> controller0.getRawAxis(GamepadConstants.kLeftTriggerPort) >= 0.5
+        ).onTrue(
+          new ThetaAlignCommand(m_LimelightSubsystem, m_SwerveDriveSubsystem)
+        );
+
+
+    new JoystickButton(controller0, GamepadConstants.kRightBumperPort)
+      .onTrue(
+        // new AutoIntakeCommand(m_intakeSubsystem)
+        // new AutoPivotDownComand(m_pivotSubsystem)
+          new InstantCommand(
+          ()-> {
+            m_intakeSubsystem.setAutoIntake(true);
+            m_intakeSubsystem.setRollerPower(.6, 1);
+          },
+          m_intakeSubsystem
+        )
+        .until(null)
+        .andThen(new WaitCommand(.5))
+        .andThen(
+          new InstantCommand(
+            ()-> {
+              m_intakeSubsystem.setAutoIntake(false);
+            },
+            m_intakeSubsystem
+          )
+        )
+        // .andThen(new AutoPivotAlgaeCommand(m_pivotSubsystem))
+      );
     // Presets
 
-    new Trigger(()-> controller0.getRawAxis(GamepadConstants.kLeftTriggerPort) >= .5)
+    // new Trigger(()-> controller0.getRawAxis(GamepadConstants.kLeftTriggerPort) >= .5)
+    //   .onTrue(
+    //     new AutoPivotStorageCommand(m_pivotSubsystem)
+    //       .alongWith(new ElevatorGroundCommand(m_elevatorSubsystem))
+    //   );
+    new JoystickButton(controller0, GamepadConstants.kLeftBumperPort)
       .onTrue(
         new AutoPivotStorageCommand(m_pivotSubsystem)
           .alongWith(new ElevatorGroundCommand(m_elevatorSubsystem))

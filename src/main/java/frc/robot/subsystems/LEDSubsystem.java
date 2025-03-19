@@ -258,9 +258,9 @@ public class LEDSubsystem extends SubsystemBase{
         setOffset(0);
         // colorFlowAnimation();
         rainbowAnimation();
-        SmartDashboard.putNumber("LED_R", getR(ledColor));
-        SmartDashboard.putNumber("LED_G", getG(ledColor));
-        SmartDashboard.putNumber("LED_B", getB(ledColor));
-        SmartDashboard.updateValues();
+        // SmartDashboard.putNumber("LED_R", getR(ledColor));
+        // SmartDashboard.putNumber("LED_G", getG(ledColor));
+        // SmartDashboard.putNumber("LED_B", getB(ledColor));
+        // SmartDashboard.updateValues();
     }
 }

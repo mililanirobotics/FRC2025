@@ -23,22 +23,26 @@ public class ThetaAlignCommand extends Command {
         if (m_LimelightSubsystem.getTagID() == 7 || m_LimelightSubsystem.getTagID() == 18) {
             m_SwerveDriveSubsystem.setDesiredHeading(0);
         }
-        if (m_LimelightSubsystem.getTagID() == 8 || m_LimelightSubsystem.getTagID() == 17) {
+        else if (m_LimelightSubsystem.getTagID() == 8 || m_LimelightSubsystem.getTagID() == 17) {
             m_SwerveDriveSubsystem.setDesiredHeading(60);
         }
-        if (m_LimelightSubsystem.getTagID() == 9 || m_LimelightSubsystem.getTagID() == 22) {
+        else if (m_LimelightSubsystem.getTagID() == 9 || m_LimelightSubsystem.getTagID() == 22) {
             m_SwerveDriveSubsystem.setDesiredHeading(120);
         }
-        if (m_LimelightSubsystem.getTagID() == 10 || m_LimelightSubsystem.getTagID() == 21) {
+        else if (m_LimelightSubsystem.getTagID() == 10 || m_LimelightSubsystem.getTagID() == 21) {
             m_SwerveDriveSubsystem.setDesiredHeading(180);
         }
-        if (m_LimelightSubsystem.getTagID() == 11 || m_LimelightSubsystem.getTagID() == 20) {
+        else if (m_LimelightSubsystem.getTagID() == 11 || m_LimelightSubsystem.getTagID() == 20) {
             m_SwerveDriveSubsystem.setDesiredHeading(240);
         }
-        if (m_LimelightSubsystem.getTagID() == 6 || m_LimelightSubsystem.getTagID() == 19) {
+        else if (m_LimelightSubsystem.getTagID() == 6 || m_LimelightSubsystem.getTagID() == 19) {
             m_SwerveDriveSubsystem.setDesiredHeading(300);
         }
-        m_SwerveDriveSubsystem.setHeadingLimiter(true);    }
+        else {
+            return;
+        }
+        m_SwerveDriveSubsystem.setHeadingLimiter(true);    
+    }
 
     @Override
     public boolean isFinished() {
