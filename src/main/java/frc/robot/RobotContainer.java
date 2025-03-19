@@ -388,7 +388,7 @@ public class RobotContainer {
           },
           m_intakeSubsystem
         )
-        .until(null)
+        .until(() -> m_intakeSubsystem.isCoralIn())
         .andThen(new WaitCommand(.5))
         .andThen(
           new InstantCommand(
