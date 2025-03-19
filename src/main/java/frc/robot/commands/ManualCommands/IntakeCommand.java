@@ -7,7 +7,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.pivotConstant.PivotPositions;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class EjectCommand extends Command {
+public class IntakeCommand extends Command {
     private IntakeSubsystem m_intakeSubsystem;
     private PivotPositions pivotState;
     private GenericHID controller;
@@ -15,7 +15,7 @@ public class EjectCommand extends Command {
     private double percentOutput;
     private double scoringMultiplier;
 
-    public EjectCommand(IntakeSubsystem m_IntakeSubsystem){
+    public IntakeCommand(IntakeSubsystem m_IntakeSubsystem){
         this.m_intakeSubsystem = m_IntakeSubsystem;
 
         addRequirements(m_IntakeSubsystem);
@@ -27,27 +27,26 @@ public class EjectCommand extends Command {
         m_intakeSubsystem.setAutoIntake(true);
         switch(pivotState) {
             default:
-                percentOutput = -.2;
+                percentOutput = .2;
                 break;
             case INTAKE:
-                percentOutput = -IntakeConstants.IntakePercentOutput;
+                percentOutput = IntakeConstants.IntakePercentOutput;
                 break;
             case SCORING:
-                percentOutput = -IntakeConstants.ScoringPercentOutput;
+                percentOutput = IntakeConstants.ScoringPercentOutput;
                 scoringMultiplier = 0.85;
                 break;
             case ALGAE:
-                percentOutput = -IntakeConstants.AlgaePercentOutput;   
+                percentOutput = IntakeConstants.AlgaePercentOutput;   
                 break;
         }
         m_intakeSubsystem.setRollerPower(percentOutput, scoringMultiplier);
-
     }
 
     @Override
     public void end(boolean interupted){
-        m_intakeSubsystem.shutdown();
-        m_intakeSubsystem.setAutoIntake(false);
+        // m_intakeSubsystem.shutdown();
+        // m_intakeSubsystem.setAutoIntake(false);
     }
 
     @Override

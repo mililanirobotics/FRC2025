@@ -32,6 +32,7 @@ import frc.robot.commands.ManualCommands.ElevatorControlCommand;
 import frc.robot.commands.ManualCommands.ElevatorDownCommand;
 import frc.robot.commands.ManualCommands.ElevatorUpCommand;
 import frc.robot.commands.ManualCommands.HangControlCommand;
+import frc.robot.commands.ManualCommands.IntakeCommand;
 import frc.robot.commands.ManualCommands.IntakeControlCommand;
 import frc.robot.commands.ManualCommands.IntakeShutdownCommand;
 import frc.robot.commands.ManualCommands.PivotBackwardCommand;
@@ -84,6 +85,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -379,18 +381,9 @@ public class RobotContainer {
 
     new JoystickButton(controller0, GamepadConstants.kRightBumperPort)
       .onTrue(
-        // new AutoIntakeCommand(m_intakeSubsystem)
-        // new AutoPivotDownComand(m_pivotSubsystem)
-          new InstantCommand(
-          ()-> {
-            m_intakeSubsystem.setAutoIntake(true);
-            m_intakeSubsystem.setRollerPower(.6, 1);
-          },
-          m_intakeSubsystem
-        )
-        .until(null)
-        .andThen(new WaitCommand(.5))
-        .andThen(
+        new SequentialCommandGroup(
+          new IntakeCommand(m_intakeSubsystem).until(m_intakeSubsystem::isCoralIn),
+          new WaitCommand(.5),
           new InstantCommand(
             ()-> {
               m_intakeSubsystem.setAutoIntake(false);
@@ -398,6 +391,25 @@ public class RobotContainer {
             m_intakeSubsystem
           )
         )
+        // new AutoIntakeCommand(m_intakeSubsystem)
+        // new AutoPivotDownComand(m_pivotSubsystem)
+        //   new InstantCommand(
+        //   ()-> {
+        //     m_intakeSubsystem.setAutoIntake(true);
+        //     m_intakeSubsystem.setRollerPower(.6, 1);
+        //   },
+        //   m_intakeSubsystem
+        // )
+        // .until(()-> m_intakeSubsystem.isCoralIn())
+        // .andThen(new WaitCommand(.5))
+        // .andThen(
+        //   new InstantCommand(
+        //     ()-> {
+        //       m_intakeSubsystem.setAutoIntake(false);
+        //     },
+        //     m_intakeSubsystem
+        //   )
+        // )
         // .andThen(new AutoPivotAlgaeCommand(m_pivotSubsystem))
       );
     // Presets

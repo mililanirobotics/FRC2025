@@ -20,7 +20,7 @@ public class AutoIntakeCommand extends Command{
     }
     @Override
     public void end(boolean interupted){
-    m_intakeSubsystem.shutdown();
+        m_intakeSubsystem.shutdown();
     }
     @Override
     public boolean isFinished(){
