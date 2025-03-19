@@ -70,8 +70,11 @@ public class SwerveControlCommand extends Command{
             currentPosition = m_SwerveDriveSubsystem.getDegrees();
 
             pid.calculate(currentPosition);
-            if (Math.abs(pid.getError()) > 180) {
-                currentPosition = currentPosition - 360;    
+            if (Math.abs(pid.getError()) > 180 && m_SwerveDriveSubsystem.getDesiredHeading() > 180) {
+                currentPosition = currentPosition + 360;    
+            }
+            else if (Math.abs(pid.getError()) > 180) {
+                currentPosition = currentPosition -360;
             }
             turningSpeed = -pid.calculate(currentPosition);
         }
@@ -101,7 +104,7 @@ public class SwerveControlCommand extends Command{
         SmartDashboard.putNumber("Naxv Degrees", m_SwerveDriveSubsystem.getDegrees());
         SmartDashboard.putNumber("Radians", m_SwerveDriveSubsystem.getRad());
         SmartDashboard.putNumber("Theta Error", pid.getError());
-        SmartDashboard.putNumber("SGJVSGNJEDWJNVDSNSVNDADC", pid.calculate(m_SwerveDriveSubsystem.getDegrees()));
+        SmartDashboard.putNumber("Turning Output", pid.calculate(currentPosition));
         SmartDashboard.updateValues();
     }
     
