@@ -47,11 +47,12 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     public void setRollerPower (double power, double multiplier) {
         rollerTop.set(power);
-        rollerBottom.set(power*multiplier);
+        rollerBottom.set(power *multiplier);
     }
     public void setRollerTopPower (double power) {
-        rollerTop.set(power);
+        rollerTop.set(power);    
     }
+    
     public void setRollerBottomPower (double power) {
         rollerBottom.set(power);
     }
@@ -119,6 +120,10 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     public void bottomTestSpeedShutdown(){
         bottomTestSpeed = 0;
+    }
+
+    public double getTopRollerPosition() {
+        return rollerTop.getAlternateEncoder().getPosition();
     }
 
     public void shutdown() {

@@ -13,7 +13,7 @@ import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class AlignLeftCommand extends Command {
+public class AlignDistanceCommand extends Command {
     private SwerveDriveSubsystem m_SwerveDriveSubsystem;
     private LimelightSubsystem m_LimelightSubsystem;
     //private VisionConstants m_VisionState;
@@ -25,7 +25,7 @@ public class AlignLeftCommand extends Command {
 
     private GenericHID controller;
 
-    public AlignLeftCommand(SwerveDriveSubsystem swerveDriveSubsystem, LimelightSubsystem limelightSubsystem) {
+    public AlignDistanceCommand(SwerveDriveSubsystem swerveDriveSubsystem, LimelightSubsystem limelightSubsystem) {
         m_SwerveDriveSubsystem = swerveDriveSubsystem;
         m_LimelightSubsystem = limelightSubsystem;
         //m_VisionState = visionConstants;
@@ -47,12 +47,12 @@ public class AlignLeftCommand extends Command {
         //         offset = LimelightConstants.kRightAlignOffset;
         //         break;
         // }
-        offset = Math.toRadians(LimelightConstants.kLeftAlignOffset);
+        offset = Math.toRadians(LimelightConstants.kVertical3AlignOffset);
     }
 
     @Override
     public void execute() {
-        currentAngle = Math.toRadians(m_LimelightSubsystem.getHorizontalOffset());
+        currentAngle = Math.toRadians(m_LimelightSubsystem.getVerticalOffset());
         translationalSpeed = alignCenterPID.calculate(currentAngle, offset) * (-3);
 
         /*

@@ -42,13 +42,18 @@ public class LimelightSubsystem extends SubsystemBase {
     }
 
     public boolean isReefTargetFound() {
-        // for(int i = 0; i < LimelightConstants.kReefAprilTagIDs.length; i++) {
-        //     if ((int)getTagID() == LimelightConstants.kReefAprilTagIDs[i]) {
-        //         return true;
-        //     }
-        // }
-        // return false;
-        return true;
+        if (
+            getTagID() == 7 || getTagID() == 18
+            ||getTagID() == 8 || getTagID() == 17
+            || getTagID() == 9 || getTagID() == 22
+            || getTagID() == 10 || getTagID() == 21
+            || getTagID() == 11 || getTagID() == 20
+            || getTagID() == 6 || getTagID() == 19
+            ) 
+        {
+            return true;
+        }
+        return false;
     }
 
     public double getTagID() {

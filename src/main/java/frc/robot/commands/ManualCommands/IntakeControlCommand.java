@@ -50,6 +50,9 @@ public class IntakeControlCommand extends Command {
             default:
                 percentOutput = .2;
                 break;
+            case STORAGE:
+                percentOutput = 0.6;
+                break;
             case INTAKE:
                 percentOutput = IntakeConstants.IntakePercentOutput;
                 break;
@@ -60,6 +63,11 @@ public class IntakeControlCommand extends Command {
                 percentOutput = IntakeConstants.AlgaePercentOutput;
                 break;
         }
+
+        if (controller.getRawAxis(GamepadConstants.kRightTriggerPort) > GamepadConstants.kDeadzone) {
+            percentOutput = 0.3;
+        }
+
         // percentOutput = .5;
         if (controller.getRawButton(GamepadConstants.kAButtonPort) && !controller.getRawButton(GamepadConstants.kRightBumperPort)) {
             m_intakeSubsystem.setRollerPower(-percentOutput, 1);

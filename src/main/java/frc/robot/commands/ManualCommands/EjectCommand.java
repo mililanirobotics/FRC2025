@@ -15,9 +15,9 @@ public class EjectCommand extends Command {
     private double percentOutput;
     private double scoringMultiplier;
 
-    public EjectCommand(IntakeSubsystem m_IntakeSubsystem){
+    public EjectCommand(IntakeSubsystem m_IntakeSubsystem, PivotPositions pivotState){
         this.m_intakeSubsystem = m_IntakeSubsystem;
-
+        this.pivotState = pivotState;
         addRequirements(m_IntakeSubsystem);
         scoringMultiplier = 1;
     }
@@ -40,18 +40,18 @@ public class EjectCommand extends Command {
                 percentOutput = -IntakeConstants.AlgaePercentOutput;   
                 break;
         }
-        m_intakeSubsystem.setRollerPower(percentOutput, scoringMultiplier);
+        m_intakeSubsystem.setRollerPower(.75, scoringMultiplier);
 
     }
 
     @Override
     public void end(boolean interupted){
-        m_intakeSubsystem.shutdown();
-        m_intakeSubsystem.setAutoIntake(false);
+        // m_intakeSubsystem.shutdown();
+        // m_intakeSubsystem.setAutoIntake(false);
     }
 
     @Override
     public boolean isFinished(){
-        return m_intakeSubsystem.getAutoIntake();
+        return true;
     }
 }

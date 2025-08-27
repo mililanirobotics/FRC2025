@@ -53,12 +53,13 @@ public class PivotSubsystem extends SubsystemBase {
             // .pid(.0001, 0, 0);
 
         pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-         pidController = new PIDController(5, 0, 0);
+
+        pidController = new PIDController(35, 0, 0);
          // encoder = new Encoder(7, 8); //temp holder numbers4 .001
         
         pivotEncoder = new DutyCycleEncoder(PortConstants.kPivotEncoderPort, 1, pivotConstant.kPivotZeroPosition);
         testSpeed = 0;
-        currentState = PivotPositions.STARTING;
+        currentState = PivotPositions.STORAGE;
     }
 
     //SETTER METHODS

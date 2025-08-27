@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.Constants.GamepadConstants;
 import frc.robot.Constants.SwerveModuleConstants;
@@ -19,6 +19,7 @@ public class SwerveControlCommand extends Command{
 
     // Declaring the Subsystem
     private SwerveDriveSubsystem m_SwerveDriveSubsystem;
+    private LimelightSubsystem m_LimelightSubsystem;
 
     // SlewRateLimiter limits the rate of acceleration to be gradual and linear
     private SlewRateLimiter xLimiter, yLimiter, turningLimiter;
@@ -28,15 +29,17 @@ public class SwerveControlCommand extends Command{
     private PIDController pid;
     private double currentPosition;
 
-    public SwerveControlCommand(SwerveDriveSubsystem swerveDriveSubsystem, GenericHID gamepad) {
+    public SwerveControlCommand(SwerveDriveSubsystem swerveDriveSubsystem, LimelightSubsystem m_LimelightSubsystem, GenericHID gamepad) {
         m_SwerveDriveSubsystem = swerveDriveSubsystem;
+        this.m_LimelightSubsystem = m_LimelightSubsystem;
         this.gamepad = gamepad;
 
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAcceleration);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAcceleration);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleRotationMaxAngularAcceleration);
 
-        pid = new PIDController(0.01, 0, 0);
+        pid = new PIDController(0.02, 0, 0);
+        pid.setIntegratorRange(-0.1, .1);
 
         addRequirements(m_SwerveDriveSubsystem);
     }
@@ -45,18 +48,18 @@ public class SwerveControlCommand extends Command{
     @Override
     public void execute() {
         // Grabs Joystick Inputs as Speed Inputs
-        double xSpeed = gamepad.getRawAxis(GamepadConstants.kLeftYJoystickPort);
-        double ySpeed = gamepad.getRawAxis(GamepadConstants.kLeftXJoystickPort);
-        double turningSpeed = gamepad.getRawAxis(GamepadConstants.kRightXJoystickPort);
-        if (Math.abs(turningSpeed) > 0) {
+        double xSpeed = gamepad.getRawAxis(GamepadConstants.kLeftYJoystickPort) * .25;
+        double ySpeed = gamepad.getRawAxis(GamepadConstants.kLeftXJoystickPort) * .25;
+        double turningSpeed = gamepad.getRawAxis(GamepadConstants.kRightXJoystickPort) * .25;
+        if (Math.abs(turningSpeed) > GamepadConstants.kDeadzone || !m_LimelightSubsystem.isReefTargetFound()) {
             m_SwerveDriveSubsystem.setHeadingLimiter(false);
         }
 
-        if(gamepad.getRawAxis(GamepadConstants.kRightTriggerPort) >= 0.5) {
-            xSpeed *= 0.25;
-            ySpeed *= 0.25;
-            turningSpeed *= 0.25;
-        }
+        // if(gamepad.getRawAxis(GamepadConstants.kRightTriggerPort) >= 0.5) {
+        //     xSpeed *= 0.25;
+        //     ySpeed *= 0.25;
+        //     turningSpeed *= 0.25;
+        // }
         
         // Apply Deadband to prevent motors accidentally spinning
         xSpeed = Math.abs(xSpeed) > GamepadConstants.kDeadzone ? xSpeed : 0.0;
@@ -76,6 +79,7 @@ public class SwerveControlCommand extends Command{
             else if (Math.abs(pid.getError()) > 180) {
                 currentPosition = currentPosition -360;
             }
+            // turningSpeed = Math.abs(-pid.calculate(currentPosition)) < 0.015 ? Math.copySign(0.015, -pid.calculate(currentPosition)) : -pid.calculate(currentPosition);
             turningSpeed = -pid.calculate(currentPosition);
         }
         else {

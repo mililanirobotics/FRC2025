@@ -24,6 +24,7 @@ import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.TwinkleOffAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation;
 
+import edu.wpi.first.networktables.ValueEventData;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -33,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class LEDSubsystem extends SubsystemBase{
     private final CANdle m_candle = new CANdle(LEDConstants.CANdleID);
     private final int ledCount = LEDConstants.LEDcount;
+    private boolean hpSignal = false;
 
     private boolean mutliplePatterns = false;
     private boolean animationOn = false;
@@ -63,11 +65,13 @@ public class LEDSubsystem extends SubsystemBase{
         configAll.statusLedOffWhenActive = true;
         configAll.disableWhenLOS = false;
         configAll.stripType = LEDStripType.RGB;
-        configAll.brightnessScalar = 1;
+        configAll.brightnessScalar = .5;
         configAll.vBatOutputMode = VBatOutputMode.Modulated;
         configAll.v5Enabled = true;
         m_candle.configAllSettings(configAll, 100);
 
+        setOffset(8);
+        setBrightness(0);
         clear();
         // setColor(new Color(255, 0, 0));
         // setBrightness(1);
@@ -76,6 +80,14 @@ public class LEDSubsystem extends SubsystemBase{
 
         // setLEDs(0, 0, 100);
         // m_candle.animate(new RainbowAnimation(1, 0.5, 16, false, 0));
+    }
+
+    public boolean getHPSignal() {
+        return hpSignal;
+    }
+
+    public void setHPSignal(boolean value) {
+        hpSignal = value;
     }
 
     public int getR(Color color) {
@@ -140,11 +152,6 @@ public class LEDSubsystem extends SubsystemBase{
         return this;
     }
 
-    public void disableAnimation() {
-        clear();
-        animationOn = false;
-    }
-
     public void fireAnimation() {
         m_candle.animate(new FireAnimation(brightness, ledAnimSpeed, ledCount, 1, 1, ledReversed, ledOffset), 0);
     }
@@ -182,30 +189,25 @@ public class LEDSubsystem extends SubsystemBase{
     }
 
     public void coralLeftDisplay() {
-        clear();
+        // clear();
         setColor(LEDConstants.kLeftSlotColor);
     }
 
     public void coralRightDisplay() {
-        clear();
+        // clear();
         setColor(LEDConstants.kRightSlotColor);
     }
 
     public void coralInDisplay() {
-        clear();
+        // clear();
         setColor(LEDConstants.kCoralInColor);
     }
 
     public void neutralDisplay() {
-        clear();
+        // clear();
         setColor(LEDConstants.kNeutralColor);
     }
-    public void neutralBlinkingDisplay() {
-        clear();
-        setAnimSpeed(.6);
-        setColor(LEDConstants.kNeutralColor);
-        rgbFadeAnimation();
-    }
+
     public void teleoperation() {
         // clear();
         // setBrightness(1);
@@ -220,22 +222,15 @@ public class LEDSubsystem extends SubsystemBase{
 
     public void autonomous() {
         // clear();
-        // setBrightness(1);
-        // setAnimSpeed(.5);
-        // setOffset(0);
-        // larsonAnimation();
+        setAnimSpeed(.5);
+        larsonAnimation();
     }
-
     public void disabled() {
-        clear();
-        // setBrightness(1);
-        // setAnimSpeed(.5);
-        // setOffset(0);
-        // setAnimation(animations.RAINBOW_ANIM);
-        // setBrightness(1);
-        // setAnimSpeed(.5);
-        // setColor(new Color(255, 30, 0));
-        // singleFadeAnimation();  
+        // clear();
+        setBrightness(1);
+        setAnimSpeed(.5);
+        setColor(new Color(255, 30, 0));
+        singleFadeAnimation();  
     }
 
     public void clear() {
@@ -253,11 +248,11 @@ public class LEDSubsystem extends SubsystemBase{
         // // );
 
         // clear();
-        setBrightness(.5);
-        setAnimSpeed(.5);
-        setOffset(0);
+        // setBrightness(.5);
+        // setAnimSpeed(.5);
+        // setOffset(0);
         // colorFlowAnimation();
-        rainbowAnimation();
+        // rainbowAnimation();
         // SmartDashboard.putNumber("LED_R", getR(ledColor));
         // SmartDashboard.putNumber("LED_G", getG(ledColor));
         // SmartDashboard.putNumber("LED_B", getB(ledColor));

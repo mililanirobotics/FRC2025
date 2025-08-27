@@ -15,8 +15,9 @@ public class IntakeCommand extends Command {
     private double percentOutput;
     private double scoringMultiplier;
 
-    public IntakeCommand(IntakeSubsystem m_IntakeSubsystem){
+    public IntakeCommand(IntakeSubsystem m_IntakeSubsystem, PivotPositions pivotState){
         this.m_intakeSubsystem = m_IntakeSubsystem;
+        this.pivotState = pivotState;
 
         addRequirements(m_IntakeSubsystem);
         scoringMultiplier = 1;
@@ -40,7 +41,7 @@ public class IntakeCommand extends Command {
                 percentOutput = IntakeConstants.AlgaePercentOutput;   
                 break;
         }
-        m_intakeSubsystem.setRollerPower(percentOutput, scoringMultiplier);
+        m_intakeSubsystem.setRollerPower(-1, scoringMultiplier);
     }
 
     @Override
@@ -51,6 +52,6 @@ public class IntakeCommand extends Command {
 
     @Override
     public boolean isFinished(){
-        return m_intakeSubsystem.getAutoIntake();
+        return true;
     }
 }

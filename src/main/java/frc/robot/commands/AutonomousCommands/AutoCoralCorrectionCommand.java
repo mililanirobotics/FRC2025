@@ -5,6 +5,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class AutoCoralCorrectionCommand extends Command {
     private IntakeSubsystem m_intakeSubsystem;
+    private double startingIntakePosition;
+    private boolean isFinished;
+    // private Timer time = new Timer();
 
     public AutoCoralCorrectionCommand(IntakeSubsystem intakeSubsystem){
         m_intakeSubsystem = intakeSubsystem;
@@ -13,10 +16,18 @@ public class AutoCoralCorrectionCommand extends Command {
     }
     @Override
     public void initialize(){
+        startingIntakePosition = m_intakeSubsystem.getTopRollerPosition();
+        isFinished = false;
+        
     }
+
     @Override
     public void execute(){
-        m_intakeSubsystem.setRollerPower(0.6, 1);
+        if (m_intakeSubsystem.getTopRollerPosition() - startingIntakePosition < 0.25) {
+            m_intakeSubsystem.setRollerPower(0.6, 1);
+        }
+
+
     }
     @Override
     public void end(boolean interupted){
@@ -24,6 +35,6 @@ public class AutoCoralCorrectionCommand extends Command {
     }
     @Override
     public boolean isFinished(){
-        return m_intakeSubsystem.isCoralIn();
+        return isFinished;
     }
 }

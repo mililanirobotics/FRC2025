@@ -15,6 +15,7 @@ public class AutoOuttakeCommand extends Command {
     @Override
     public void initialize(){
         m_intakeSubsystem.setRollerPower(0.6,1);
+        System.out.print("Command ran");
     }
    
     @Override

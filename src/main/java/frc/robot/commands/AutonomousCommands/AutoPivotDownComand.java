@@ -21,9 +21,12 @@ public class AutoPivotDownComand extends Command{
     @Override
     public void execute(){
         m_PivotSubsystem.setPivotPower(
-            Math.abs(m_PivotSubsystem.getOutput()) > pivotConstant.kMaximumOutput ? 
-            Math.copySign(pivotConstant.kMaximumOutput, m_PivotSubsystem.getOutput()) 
-            : m_PivotSubsystem.getOutput());
+            m_PivotSubsystem.getOutput() > pivotConstant.kMaximumOutput ? 
+                pivotConstant.kMaximumOutput
+                : m_PivotSubsystem.getOutput() < pivotConstant.kMaximumNegativeOutput ? 
+                    pivotConstant.kMaximumNegativeOutput 
+                    : m_PivotSubsystem.getOutput()
+        );
         
     }
     @Override

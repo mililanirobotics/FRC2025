@@ -50,7 +50,7 @@ public class ElevatorSubsystem extends SubsystemBase{
             .inverted(true)
             .idleMode(IdleMode.kBrake);
        leftElevatorMotor.configure(leftSparkFlexConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        pidController = new PIDController(0.03, 0.01, 0);
+        pidController = new PIDController(0.033, 0.01, 0);
         pidController.setIntegratorRange(-0.05, 0.045);
         testSpeed = 0;
         

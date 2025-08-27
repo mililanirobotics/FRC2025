@@ -102,10 +102,10 @@ public final class Constants {
     public static final int kRightFrontCANCoderPort = 11;
     public static final int kLeftBackCANCoderPort = 2;
     public static final int kRightBackCANCoderPort = 8;
-    public static final double kLeftFrontCANCoderOffset = 0.000244140625;
-    public static final double kRightFrontCANCoderOffset = 0.236328125; //.259765625;
-    public static final double kLeftBackCANCoderOffset = 0.4951171875;//017822265625
-    public static final double kRightBackCANCoderOffset = -0.013916015625;
+    public static final double kLeftFrontCANCoderOffset = 0.008056640625; //
+    public static final double kRightFrontCANCoderOffset = 0.395751953125; //.259765625;
+    public static final double kLeftBackCANCoderOffset = -0.011474609375;// // 4951171875
+    public static final double kRightBackCANCoderOffset = 0.4482421875;
 
     public static final int kLeftBackIndex = 2;
     public static final int kRightBackIndex = 3;
@@ -117,9 +117,9 @@ public final class Constants {
 
     // Reverse Booleans
     public static final boolean kLeftFrontDriveReversed = false;
-    public static final boolean kRightFrontDriveReversed = true;
-    public static final boolean kLeftBackDriveReversed = true;
-    public static final boolean kRightBackDriveReversed = true;
+    public static final boolean kRightFrontDriveReversed = false;
+    public static final boolean kLeftBackDriveReversed = false;
+    public static final boolean kRightBackDriveReversed = false;
 
     public static final boolean kLeftFrontRotationReversed = false;
     public static final boolean kRightFrontRotationReversed = false;
@@ -210,11 +210,11 @@ public final class Constants {
 
   public static class DriveConstants {
     // Drive Speed Constants
-    public static final double kDriveMaxMetersPerSecond = 2;
+    public static final double kDriveMaxMetersPerSecond = 0.05; //1.5
     //4.95
-    public static final double kRotationMaxRadiansPerSecond = 1 * Math.PI;
+    public static final double kRotationMaxRadiansPerSecond = 0.05 * Math.PI; //1
     //2 * Math.PI
-    public static final double kDriveMetersPerSecondLimit = 2;//4.5;
+    public static final double kDriveMetersPerSecondLimit = 0.05;//4.5; //1.5
     //3
 
     public static final double kTeleDriveMaxAcceleration = kDriveMaxMetersPerSecond * 8;
@@ -288,7 +288,7 @@ public final class Constants {
 
 
     //PID Constants
-    public static final double kPController = .8;
+    public static final double kPController = 3;
     public static final double kIController = 0;
     public static final double kDController = 0;
 
@@ -359,8 +359,13 @@ public final class Constants {
   // }
 
   public static class LimelightConstants {
-    public static final double kLeftAlignOffset = 14.49; //Testing
-    public static final double kRightAlignOffset = -1.55; //Testing
+    public static final double kLeftSlotLAlignOffset = 9.2; //Testing
+    // public static final double kLeftSlotRAlignOffset = 14.49;
+    // public static final double kRightSlotLAlignOffset = -32.05; //Testing
+    public static final double kRightSlotRAlignOffset = -11.321; 
+
+    public static final double kVertical3AlignOffset = 9.06;
+    public static final double kVertical2AlignOffset = 8.0542;
 
     public static final int[] kReefAprilTagIDs = {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};
 
@@ -369,14 +374,21 @@ public final class Constants {
       RIGHTCORAL
     }
 
-    public static final double kAlignCenterP = 0.011;
+    public static final double kAlignCenterP = .35;
     public static final double kAlignCenterI = 0;
     public static final double kAlignCenterD = 0;
     public static final double kAlignCenterTolerance = 0.01; //Temp
+
+    public static final double kAlignThetaP = 0.011;
+    public static final double kAlignThetaI = 0;
+    public static final double kAlignThetaD = 0;
+    public static final double kAlignThetaTolerance = 0.1; //Temp
+
+    
   }
 
   public static class pivotConstant {
-    public static final double kPivotZeroPosition = 0.25; //.3
+    public static final double kPivotZeroPosition = 0.15; //.3
     //.665
     //.615
 
@@ -395,24 +407,26 @@ public final class Constants {
     //.16
 
     //OLD
-    //down .228
-    //up .0015
-    //esp .025
-    //pmp .015
-    //pap .12
+    // public static final double kPivotDownPosition = .475; // Placeholder value, needs to be tested
+    // public static final double kPivotUpPosition = 0.231; // Placeholder value, needs to be tested 102849 .3994
+    // public static final double kElevatedScorePosition = 0.2611; //Supposed good value for Scoring while elevated
+    // public static final double kPivotMiddlePosition = 0.3203; // Placeholder value, needs to be tested 102849
+    // public static final double kPivotAlgaePosition = 0.3297;
 
-    public static final double kPivotDownPosition = .482; // Placeholder value, needs to be tested
-    public static final double kPivotUpPosition = 0.19; // Placeholder value, needs to be tested 102849 .3994
-    public static final double kElevatedScorePosition = 0.2728; //Supposed good value for Scoring while elevated
-    public static final double kPivotMiddlePosition = 0.3203; // Placeholder value, needs to be tested 102849
-    public static final double kPivotAlgaePosition = 0.3297;
+    //.1499
+
+    public static final double kPivotDownPosition = .4241; // Placeholder value, needs to be tested
+    public static final double kPivotUpPosition = 0.1811; // Placeholder value, needs to be tested 102849 .3994
+    public static final double kElevatedScorePosition = 0.2112; //Supposed good value for Scoring while elevated
+    public static final double kPivotMiddlePosition = 0.2704; // Placeholder value, needs to be tested 102849
+    public static final double kPivotAlgaePosition = 0.2798;
 
     // public static final double kPivotSensorPosition = 0.01; //placeholder :(
 
     public static final double kPivotTolerance = .0035;
 
-    public static final double kMaximumOutput = 1;
-    public static final double kNegativeMaximumOutput = .5;
+    public static final double kMaximumOutput = 1; // 1
+    public static final double kMaximumNegativeOutput = -.55; //-.55
 
     public static enum PivotPositions {
       INTAKE,
@@ -426,17 +440,18 @@ public final class Constants {
 
   public static class IntakeConstants {
     public static final double IntakePercentOutput = .6;
-    public static final double AlgaePercentOutput = 0.25;
+    public static final double AlgaePercentOutput = 0.6;
     public static final double ScoringPercentOutput = .6;
   }
 
   public static class ElevatorConstants {
-    public static final double kMaximumOutput = .75;
+    public static final double kMaximumOutput = 1;
 
-    public static final double kGroundCounts = 1;
-    public static final double kLevel1Counts = 1; //Needs Testing
-    public static final double kLevel2Counts = 50.14; //Needs Testing
-    public static final double kLevel3Counts = 97; //Needs Testing97
+    public static final double kGroundCounts = 0.5;
+    public static final double kStorageCounts = 14.8579;
+    public static final double kLevel1Counts = 0.5; //Needs Testing
+    public static final double kLevel2Counts = 70; //Needs Testing
+    public static final double kLevel3Counts = 99; //Needs Testing97
 
     public static enum ElevatorPositions {
       GROUND,
@@ -450,12 +465,12 @@ public final class Constants {
  
   public static class LEDConstants {
     public static final int CANdleID = 7;
-    public static final int LEDcount = 74; //69
+    public static final int LEDcount = 96; //69
 
     public static final Color kLeftSlotColor = new Color(0, 255, 0);
     public static final Color kRightSlotColor = new Color(255, 0, 0);
-    public static final Color kCoralInColor = new Color(255, 255, 0);
+    public static final Color kCoralInColor = new Color(255, 165, 0);
 
-    public static final Color kNeutralColor = new Color(255, 165, 0);
+    public static final Color kNeutralColor = new Color(0, 200, 139);
 }
 }
